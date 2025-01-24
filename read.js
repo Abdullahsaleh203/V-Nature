@@ -5,5 +5,11 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
         console.error(err);
         return;
     }
-    console.log(data);
+    console.log("Done reading file");
+    fs.writeFile('data2.txt', data, (err) => { 
+        if (err) {
+            console.error(err);
+            return;
+        }
+    });
 });
