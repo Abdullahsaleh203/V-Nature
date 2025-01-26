@@ -1,33 +1,43 @@
 const express = require('express');
 const fs = require('fs');
-// const path = require('path');
-// const url = require('url');
+const morgan = require('morgan');
 // const slugify = require('slugify');
-
 const app = express();
-// app.use(express.json());
-// import url from 'url';
-// import path from 'path';
+// Middleware
+app.use(morgan('dev'));
+app.use(express.json());
 
-// const __filename = url.fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// console.log(__filename);
-// console.log(__dirname);
 
 const PORT = process.env.PORT || 3000;
 
-const read = JSON.parse(
+const tour = JSON.parse(
     fs.readFileSync(`${__dirname}/dev-data/data/tours.json`
 
     ));
+    
 
-app.get('/test', (req, res) => { 
+app.get('/test', (req, res) => {
     res.status(200).json({
         status: 'success',
-        read
+        results: tour.length,
+        tour
     })
 
 });
+
+app.post('/test', (req, res) => {
+    const newId = tour[tour.length - 1].id + 1;
+    const newTour = Object.assign({ id: newId }, req.body);
+    tour.push(newTour);
+    fs.writeFile(`${__dirname}/dev-data/data/tours.json`, JSON.stringify(tour), (err) => {
+        res.status(201).json({
+            status: 'success',
+            data: {
+                tour: newTour
+            }
+        })
+    });
+})
 
 
 
