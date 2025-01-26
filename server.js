@@ -16,10 +16,16 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const read = fs.readFileSync(`${__dirname}/data/data.json`, 'utf-8');
+const read = JSON.parse(
+    fs.readFileSync(`${__dirname}/dev-data/data/tours.json`
+
+    ));
 
 app.get('/test', (req, res) => { 
-    res.statusCode.json({data})
+    res.status(200).json({
+        status: 'success',
+        read
+    })
 
 });
 
