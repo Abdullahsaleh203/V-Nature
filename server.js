@@ -2,12 +2,17 @@ const express = require('express');
 const fs = require('fs');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-dotenv.config({ path: './config.env' });
+
+dotenv.config({ path: './.env' });
+
+// console.log(process.env);
 
 // const slugify = require('slugify');
 const app = express();
 // Middleware
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
 app.use(express.json());
 
 
