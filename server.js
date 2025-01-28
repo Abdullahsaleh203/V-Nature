@@ -1,6 +1,9 @@
 const express = require('express');
 const fs = require('fs');
 const morgan = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
+
 // const slugify = require('slugify');
 const app = express();
 // Middleware
