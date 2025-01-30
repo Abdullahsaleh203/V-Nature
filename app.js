@@ -3,7 +3,7 @@ const morgan = require('morgan');
 
 const tourRoute = require('./router/toureRoute');
 
-// const userRouter = require('./routes/userRoutes');
+const userRouter = require('./router/userRoute');
 
 
 
@@ -19,7 +19,7 @@ app.use(express.json());
 
     
 app.use('/api/v1/tours', tourRoute);
-// app.use('/api/v1/users', userRouter);
+app.use('/api/v1/users', userRouter);
 
 module.exports = app;
 
