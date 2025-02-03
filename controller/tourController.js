@@ -28,6 +28,9 @@ const Tour = require('./../models/tourModel');
 //   next();
 // };
 
+// CURD OPERATIONS
+
+// GET ALL TOURS
 exports.getAllTours = async(req, res) => {
   try {
   const tours = await Tour.find()  
@@ -47,7 +50,7 @@ exports.getAllTours = async(req, res) => {
   });
 };
 }
-
+// GET A SINGLE TOUR
 exports.getTour = async (req, res) => {
   try {
     const tour = await Tour.findById(req.params.id);
@@ -74,7 +77,7 @@ exports.getTour = async (req, res) => {
   //   }
   // });
 };
-
+// POST : CREATE A TOUR
 exports.createTour =async (req, res) => {
 try{
   // const newTour = new Tour({});
@@ -94,6 +97,8 @@ try{
   }
 };
 
+
+// PATCH : UPDATE A TOUR
 exports.updateTour = async (req, res) => {
   try {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body,{
@@ -116,6 +121,7 @@ exports.updateTour = async (req, res) => {
   }
 };
 
+// DELETE : DELETE A TOUR
 exports.deleteTour = async(req, res) => {
   try {
     const tour = await Tour.findByIdAndDelete(req.params.id);
