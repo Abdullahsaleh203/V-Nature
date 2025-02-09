@@ -46,6 +46,11 @@ exports.getAllTours = async(req, res) => {
      
     const query = Tour.find(queryObj);
     const tours = await Tour.find(query) 
+    /* const tours = await Tour.find().where('duration')
+    .equals(5)
+    .where('difficulty').
+    equals('easy'); */
+    
     // const tours = await Tour.find(req.query);
     // console.log(req.requestTime);
     // requestedAt: req.requestTime,
