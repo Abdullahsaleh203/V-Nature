@@ -51,9 +51,7 @@ exports.getAllTours = async(req, res) => {
     .where('difficulty').
     equals('easy'); */
     
-    
     // const tours = await Tour.find(req.query);
-  
     // console.log(req.requestTime);
     // requestedAt: req.requestTime,
     res.status(200).json({
