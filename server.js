@@ -10,9 +10,6 @@ mongoose.connect(DB)
     .then((result) => { console.log('connected to db .....') })
     .catch((err) => { console.log(err) });
 
-
-
-
 // const newTour = new Tour({
 //     name: "tour 2",
 //     price: 90
