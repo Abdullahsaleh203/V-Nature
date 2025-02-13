@@ -42,7 +42,9 @@ exports.getAllTours = async(req, res) => {
     // 1B) Advanced Filtering
     // let queryStr = JSON.stringify(queryObj);
     // queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-     
+
+    
+    
     const query = Tour.find(queryObj);
     const tours = await Tour.find(query) 
     /* const tours = await Tour.find().where('duration')
