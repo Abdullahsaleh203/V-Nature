@@ -8,9 +8,6 @@ mongoose.connect(DB)
     .then((result) => { console.log('connected to db .....') })
     .catch((err) => { console.log(err) });
 
-
-
-
 // const newTour = new Tour({
 //     name: "tour 2",
 //     price: 90
@@ -23,6 +20,7 @@ mongoose.connect(DB)
 //         console.log(err);
 //     })
 // Middleware
+
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
