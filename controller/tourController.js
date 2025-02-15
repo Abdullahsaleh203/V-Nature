@@ -41,9 +41,6 @@ exports.getAllTours = async(req, res) => {
     excludedFields.forEach(el => delete queryObj[el]);
     
     // 1B) Advanced Filtering
-    // let queryStr = JSON.stringify(queryObj);
-    // queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
 
@@ -60,8 +57,8 @@ exports.getAllTours = async(req, res) => {
      }
      // 3) Limiting the fields
      if (req.query.fields) {
-      const fileds = req.query.fields.split(',').join(' ');
-      query = query.select(fileds);
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
      } else {
       query = query.select('-__v');
      }
@@ -71,7 +68,11 @@ exports.getAllTours = async(req, res) => {
       const limit = req.query.limit *1 || 100;
       const skip = (page -1 ) * limit;
       query = query.skip(skip).limit(limit);
-
+      if (req.query.page) {
+        const numTours = await Tour.countDocuments();
+        if (skip >= numTours) throw new Error('This page does not exist');
+    }
+    
     // EXECUTE QUERY
     const tours = await  query;
     /* const tours = await Tour.find().where('duration')
