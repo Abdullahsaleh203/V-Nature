@@ -4,3 +4,6 @@ data.txt
 .gitignore
 data2.txt
 notes.js
+dev-data/data/import-dev-data.js
+.vscode/settings.json
+.gitignore
