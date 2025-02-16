@@ -8,6 +8,10 @@ const router = express.Router();
 //     next();
 // });
 
+router.route('/top-5-cheap')
+    .get(tourRoute.aliasTopTours, tourRoute.getAllTours);
+
+
 router
     .route('/')
     .get(tourRoute.getAllTours)
