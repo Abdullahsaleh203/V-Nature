@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Tour = require('./../models/tourModel');
-const APIFeatures = require('./../utils/apiFeatures');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -41,7 +41,7 @@ exports.aliasTopTours = (req, res, next) => {
 exports.getAllTours = async(req, res) => {
   try {
     // EXECUTE QUERY
-    const features = new APIFeatures(Tour.find(JSON.parse(queryStr)), req.query)
+    const features = new APIFeatures(Tour.find(), req.query)
     .filter()
     .sort()
     .limitFields()
@@ -148,3 +148,18 @@ exports.deleteTour = async(req, res) => {
     });
   }
 };
+
+// exports.getTourStats = async (req, res) => {
+//   try {
+//     const stats = await Tour.aggregate([
+//       {
+//         $match: {}
+//       }
+//     ])
+//   } catch (error) {
+//     res.status(400).json({
+//       status: 'fail',
+//       message: 'Invalid data sent!'
+//     });
+//   }
+// }
