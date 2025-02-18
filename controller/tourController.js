@@ -86,7 +86,7 @@ exports.getAllTours = async(req, res) => {
     .sort()
     .limitFields()
     .paginate();
-    const tours = await  query;
+    const tours = await  features.query;
     /* const tours = await Tour.find().where('duration')
     .equals(5)
     .where('difficulty').
