@@ -209,6 +209,8 @@ exports.getMonthPlan = async (req, res) => {
           $project :{ _id: 0 }
         },{
           $sort:{ numTourStarts :-1 }
+      },{
+        $limit : 12
       }
       
     ])
