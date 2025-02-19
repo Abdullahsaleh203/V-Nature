@@ -13,6 +13,8 @@ router.route('/top-5-cheap')
 
 router.route('/tour-stats')
     .get(tourRoute.getTourStats);
+router.route('/monthly-plan/:year')
+    .get(tourRoute.getMonthPlan);
     
 router
     .route('/')
