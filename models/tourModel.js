@@ -75,11 +75,16 @@ const tourSchema = new mongoose.Schema(
       default: Date.now(),
       select: false
     },
-    startDates: [Date]
+    startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false
+    }
   },{
     toJSON : {virtuals : true},
     toObject : {virtuals : true}
-  });
+  }
+);
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
@@ -98,11 +103,7 @@ tourSchema.pre('save', function(next) {
 //   next();
 // });
 
-      // ,
-  //   secretTour: {
-  //     type: Boolean,
-  //     default: false
-  //   },
+
   //   startLocation: {
   //     // GeoJSON
   //     type: {
