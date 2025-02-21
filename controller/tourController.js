@@ -140,7 +140,7 @@ exports.deleteTour = async(req, res) => {
     });
   }
 };
-
+// AGGREGATION PIPELINE
 exports.getTourStats = async (req, res) => {
   try {
     const stats = await Tour.aggregate([
@@ -180,7 +180,7 @@ exports.getTourStats = async (req, res) => {
     });
   }
 };
-
+// GET MONTHLY PLAN
 exports.getMonthPlan = async (req, res) => {
   try {
     const year = req.params.year * 1;
