@@ -1,6 +1,8 @@
 const fs = require('fs');
 const Tour = require('./../models/tourModel');
 const APIFeatures = require('../utils/apiFeatures');
+const asyncHandler = require('../utils/asyncHandler');
+const appError = require('../utils/appError');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -30,46 +32,41 @@ exports.aliasTopTours = (req, res, next) => {
 // CURD OPERATIONS
 
 // GET ALL TOURS
-exports.getAllTours = async(req, res) => {
-  try {
+exports.getAllTours = asyncHandler(async (req, res, next) => {
     // EXECUTE QUERY
     const features = new APIFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-    const tours = await  features.query;
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+  const tours = await features.query;
+
+
     res.status(200).json({
       status: 'success',
       results: tours.length,
       data: {
         tours
       }
-  });
-} catch (err) {
-  res.status(404).json({
-    status: 'fail',
-    message: err
-  });
-};
-}
+    });
+});
+  
 // GET A SINGLE TOUR
-exports.getTour = async (req, res) => {
-  try {
+exports.getTour = asyncHandler(async (req, res,next) => {
     const tour = await Tour.findById(req.params.id);
-    // const tour = await Tour.findOne({_id: req.params.id});  // same as above
-    res.status(200).json({
-      status: 'success',
-      data: {
-        tour
-      }
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err
-    });
+  // const tour = await Tour.findOne({_id: req.params.id});  // same as above
+  if (!tour) {
+    return next(appError('No tour found with that ID', 404))
   }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour
+    }
+  });
+
+  });
+  
   // console.log(req.params);
   // const id = req.params.id * 1;
   // const tour = tours.find(el => el.id === id);
@@ -79,31 +76,24 @@ exports.getTour = async (req, res) => {
   //     Tour
   //   }
   // });
-};
+
 // POST : CREATE A TOUR
-exports.createTour =async (req, res) => {
-try{
-  // const newTour = new Tour({});
-  // newTour.save()
+exports.createTour = asyncHandler(async (req, res, next) => {
   const newTour = await Tour.create(req.body);
+
   res.status(201).json({
     status: 'success',
     data: {
       tour: newTour
     }
+  })
 })
-} catch (err) {
-  res.status(400).json({
-    status: 'fail',
-    message: err
-  });
-  }
-};
+
 
 
 // PATCH : UPDATE A TOUR
-exports.updateTour = async (req, res) => {
-  try {
+exports.updateTour = asyncHandler(async (req, res,next) => {
+
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body,{
       new: true,
       runValidators: true
@@ -115,34 +105,22 @@ exports.updateTour = async (req, res) => {
         tour
       }
     });
-
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: 'Invalid data sent!'
-    });
-  }
-};
+});
 
 // DELETE : DELETE A TOUR
-exports.deleteTour = async(req, res) => {
-  try {
+exports.deleteTour = asyncHandler(async(req, res) => {
+
     const tour = await Tour.findByIdAndDelete(req.params.id);
 
     res.status(204).json({
       status: 'success',
       data: null
     })
-  } catch (err) { 
-    res.status(400).json({
-      status: 'fail',
-      message: 'Invalid data sent!'
-    });
-  }
-};
+
+});
 // AGGREGATION PIPELINE
-exports.getTourStats = async (req, res) => {
-  try {
+exports.getTourStats = asyncHandler(async (req, res,next) => {
+
     const stats = await Tour.aggregate([
       {
         $match: { ratingsAverage: { $gte: 4.5 } }
@@ -173,16 +151,10 @@ exports.getTourStats = async (req, res) => {
         stats
       }
     });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail', 
-      message: 'Invalid data sent!'
-    });
-  }
-};
+
+});
 // GET MONTHLY PLAN
-exports.getMonthPlan = async (req, res) => {
-  try {
+exports.getMonthPlan = asyncHandler(async (req, res,next) => {
     const year = req.params.year * 1;
     const plan = await Tour.aggregate([
       {
@@ -220,10 +192,4 @@ exports.getMonthPlan = async (req, res) => {
         plan
       }
     });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail', 
-      message: 'Invalid data sent!'
-    });
-  }
-}
+})

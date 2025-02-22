@@ -1,8 +1,10 @@
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-dotenv.config({ path: './config.env' });
+const path = require('path');
+dotenv.config({ path: path.join(__dirname, '.env') });
 const app = require('./app');
 const morgan = require('morgan');
+// const DB = 'mongodb+srv://abdallahSaleh:abdallahGamal112@cluster0.svwdc.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0';
 const DB = process.env.DATABASE_URI;
 mongoose.connect(DB)
     .then((result) => { console.log('connected to db .....') })
