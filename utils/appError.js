@@ -1,5 +1,5 @@
 class appError extends Error {
-    constructor(massage, StatusCode) {
+    constructor(message, StatusCode) {
         super(message)
         this.StatusCode = StatusCode || 500
         this.Status = `${StatusCode}`.startsWith('4') ? 'fail' : 'error';

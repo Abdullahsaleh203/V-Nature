@@ -1,8 +1,8 @@
 const fs = require('fs');
 const Tour = require('./../models/tourModel');
-const APIFeatures = require('../utils/apiFeatures');
-const asyncHandler = require('../utils/asyncHandler');
-const appError = require('../utils/appError');
+const APIFeatures = require('./../utils/apiFeatures');
+const asyncHandler = require('./../utils/asyncHandler');
+const appError = require('./../utils/appError');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -53,10 +53,10 @@ exports.getAllTours = asyncHandler(async (req, res, next) => {
   
 // GET A SINGLE TOUR
 exports.getTour = asyncHandler(async (req, res,next) => {
-    const tour = await Tour.findById(req.params.id);
+  const tour = await Tour.findById(req.params.id);
   // const tour = await Tour.findOne({_id: req.params.id});  // same as above
   if (!tour) {
-    return next(appError('No tour found with that ID', 404))
+    return next(new appError('No tour found with that ID', 404))
   }
   res.status(200).json({
     status: 'success',
@@ -98,7 +98,9 @@ exports.updateTour = asyncHandler(async (req, res,next) => {
       new: true,
       runValidators: true
     });
-
+  if (!tour) {
+    return next(new appError('No tour found with that ID', 404))
+  }
     res.status(200).json({
       status: 'success',
       data: {
@@ -110,12 +112,15 @@ exports.updateTour = asyncHandler(async (req, res,next) => {
 // DELETE : DELETE A TOUR
 exports.deleteTour = asyncHandler(async(req, res) => {
 
-    const tour = await Tour.findByIdAndDelete(req.params.id);
+  const tour = await Tour.findByIdAndDelete(req.params.id);
 
-    res.status(204).json({
-      status: 'success',
-      data: null
-    })
+  if (!tour) {
+    return next(new appError('No tour found with that ID', 404))
+  }
+  res.status(204).json({
+    status: 'success',
+    data: null
+  })
 
 });
 // AGGREGATION PIPELINE
