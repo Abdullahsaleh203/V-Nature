@@ -1,7 +1,7 @@
 class appError extends Error {
     constructor(message, StatusCode) {
         super(message)
-        this.StatusCode = StatusCode || 500
+        this.StatusCode = StatusCode;
         this.Status = `${StatusCode}`.startsWith('4') ? 'fail' : 'error';
         this.isOperational = true;
 
