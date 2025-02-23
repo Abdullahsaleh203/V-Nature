@@ -4,7 +4,7 @@ const path = require('path');
 dotenv.config({ path: path.join(__dirname, '.env') });
 const app = require('./app');
 const morgan = require('morgan');
-const DB = process.env.DATABASE_URI;
+const DB = process.env.DATABASE_URI || process.env.DATABASE_URI1;
 mongoose.connect(DB)
     .then((result) => { console.log('connected to db .....') })
     .catch((err) => { console.log(err) });
