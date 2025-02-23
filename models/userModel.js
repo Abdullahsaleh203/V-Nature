@@ -29,7 +29,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 8, 
         select: false,
-        maxlength: 100
+        maxlength: 100,
+        select: false
     },
     passwordConfirm: {
         type: String,

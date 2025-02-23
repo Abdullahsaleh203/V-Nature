@@ -1,16 +1,20 @@
 const fs = require('fs');
+const User = require('./../models/userModel');
+const asyncHandler = require('./../utils/asyncHandler');
+// const appError = require('../utils/appError');
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-);
-exports.getAllUsers = (req, res) => {
+exports.getAllUsers = asyncHandler(async (req, res,next) => {
+  const users = await User.find();
+
+  // SEND RESPONSE
   res.status(200).json({
-    status: 'Success',
+    status: 'success',
+    results: users.length,
     data: {
-      tours
+      users
     }
   });
-};
+});
 exports.getUser = (req, res) => {
   res.status(200).json({
     status: 'error',
