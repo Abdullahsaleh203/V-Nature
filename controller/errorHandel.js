@@ -1,7 +1,9 @@
 const appError = require('./../utils/appError');
 
+
 const handleJWTError = ()  => new appError('Invalid token. Please log in again!', 401);
 const handleJWTExpiredError = () => new appError('Your token has expired! Please log in again.', 401);
+
 const handleCastErrorDB = err => {
     const message = `Invalid ${err.path}: ${err.value}.`;
     return new appError(message, 400);
