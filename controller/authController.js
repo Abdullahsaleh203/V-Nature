@@ -1,3 +1,4 @@
+const {promisify} = require('util');
 const User = require('../models/userModel');
 const asyncHandler = require('../utils/asyncHandler');
 const appError = require('../utils/appError');
@@ -67,6 +68,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
         return next(new appError('You are not logged in! Please log in to get access.', 401));
     }
     // 2) validate token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+    console.log(decoded);
 
     // 3) Check if user still exists
 
