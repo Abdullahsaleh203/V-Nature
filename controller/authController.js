@@ -4,7 +4,7 @@ const appError = require('../utils/appError');
 const jwt = require('jsonwebtoken');
 
 
-const loginToken = (id) => {
+const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY,
         {
             expiresIn: process.env.JWT_EXPIRES_IN
@@ -21,7 +21,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
         passwordConfirm: req.body.passwordConfirm
         
     });
-    const token = loginToken(newUser._id);
+    const token = signToken(newUser._id);
 
     res.status(201).json({
         status: 'success',
@@ -40,15 +40,40 @@ exports.login = asyncHandler(async(req, res, next) => {
     }
     // 2) Check if user exists && password is correct
     const user = await User.findOne({ email }).select('+password');
-    console.log(user.name);
+    // console.log(user.name);
 
     if (!user || !(await user.correctPassword(password, user.password))) {
         return next(new appError('Incorrect email or password', 401));
     }
     // 3) If everything is ok, send token to client
-    const token =loginToken(user._id);
+
+    const token =signToken(user._id);
     res.status(200).json({
         status: 'success',
         token
     });
 });
+
+
+exports.protect = asyncHandler(async (req, res, next) => {
+    // 1) Check if token exist and if it's valid
+
+    let token ;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')
+    ) {
+            token = req.headers.authorization.split(' ')[1];
+        }
+    if (!token) {
+        return next(new appError('You are not logged in! Please log in to get access.', 401));
+    }
+    // 2) validate token
+
+    // 3) Check if user still exists
+
+    // 4) Check if user changed password after the token was issued
+
+    // 5) If everything is ok, grant access to protected route
+
+
+    next();
+})
