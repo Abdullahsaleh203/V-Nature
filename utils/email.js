@@ -10,7 +10,17 @@ const sendEmail = async options => {
         }
         // Activate in gmail "less secure app" option
     })
-};
+    // 2) Define the email options
+    const mailOptions = {
+        from: 'Natours ',
+        to: options.email,
+        subject: options.subject,
+        text: options.message
+        // html:
+    }
+    // 3) Actually send the email
+    await transporter.sendMail(mailOptions);
+    };
     // 2) Define the email options
     // const mailOptions = {
 //     from: 'Natours <    
