@@ -77,13 +77,10 @@ exports.protect = asyncHandler(async (req, res, next) => {
         return next(new appError('The user belonging to this token no longer exists.', 401));
     }
     // 4) Check if user changed password after the token was issued
-
-    // if (currentUser.changedPasswordAfter(decoded.iat)) {
-    //     return next(new appError('User recently changed password! Please log in again.', 401));
-    // }
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next(new appError('User recently changed password! Please log in again.', 401))
+    };
     // 5) If everything is ok, grant access to protected route
-    // req.user = currentUser;
-
-
+    req.user = currentUser;
     next();
 })
