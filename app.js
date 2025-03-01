@@ -20,7 +20,7 @@ app.use(express.json());
 // Add request time to request object
 app.use((req,res ,next)=>{
     req.requestTime = new Date().toISOString();
-    console.log(req.headers);
+    // console.log(req.headers);
     next();
 })
 

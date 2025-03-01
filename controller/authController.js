@@ -19,7 +19,10 @@ exports.signup = asyncHandler(async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm
+        passwordConfirm: req.body.passwordConfirm,
+        role: req.body.role,
+        photo: req.body.photo
+        
 
     });
     const token = signToken(newUser._id);
@@ -69,7 +72,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     }
     // 2) validate token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
-    console.log(decoded);
+    // console.log(decoded);
 
     // 3) Check if user still exists
     const currentUser = await User.findById(decoded.id);
@@ -84,3 +87,11 @@ exports.protect = asyncHandler(async (req, res, next) => {
     req.user = currentUser;
     next();
 })
+exports.restrictTo = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(new appError('You do not have permission to perform this action', 403));
+        }
+        next();
+    }
+};

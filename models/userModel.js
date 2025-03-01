@@ -19,15 +19,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'default.jpg'
     },
-    // role: {
-    //     type: String,
-    //     enum: ['user', 'guide', 'lead-guide', 'admin'],
-    //     default: 'user'
-    // },
+    role: {
+        type: String,
+        enum: ['user', 'guide', 'lead-guide', 'admin'],
+        default: 'user'
+    },
     password: {
         type: String,
         required: true,
-        minlength: 8, 
+        minlength: 8,
         select: false,
         maxlength: 100,
         select: false
@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema({
             message: 'Passwords are not the same!'
         }
     },
+
     passwordChangedAt: Date,
     createdAt: {
         type: Date,
