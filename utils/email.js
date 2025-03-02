@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+
 const sendEmail = async options => {
     // 1) Create a transporter
     const transporter = nodemailer.createTransport({
@@ -17,7 +18,7 @@ const sendEmail = async options => {
     })
     // 2) Define the email options
     const mailOptions = {
-        from: 'Admin <',
+        from: 'Admin <admin@dev.com>',
         to: options.email,
         subject: options.subject,
         text: options.message
@@ -27,5 +28,5 @@ const sendEmail = async options => {
     // 3) Actually send the email
     await transporter.sendMail(mailOptions);
     };
+
 module.exports = sendEmail;
-// exports.protect = asyncHandler(async (req, res, next) => {   
