@@ -9,20 +9,23 @@ const sendEmail = async options => {
             pass: process.env.EMAIL_PASSWORD
         }
         // Activate in gmail "less secure app" option
+        // service: 'Gmail',
+        // auth: {
+        //     user: process.env.EMAIL_USERNAME,
+        //     pass: process.env.EMAIL_PASSWORD
+        // }
     })
     // 2) Define the email options
     const mailOptions = {
-        from: 'Natours ',
+        from: 'Admin <',
         to: options.email,
         subject: options.subject,
         text: options.message
         // html:
+
     }
     // 3) Actually send the email
     await transporter.sendMail(mailOptions);
     };
-    // 2) Define the email options
-    // const mailOptions = {
-//     from: 'Natours <    
-    
-    // 3) Actually send the email
+module.exports = sendEmail;
+// exports.protect = asyncHandler(async (req, res, next) => {   
