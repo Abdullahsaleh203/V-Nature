@@ -21,9 +21,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
-        role: req.body.role,
-        photo: req.body.photo
-        
+        role: req.body.role
 
     });
     const token = signToken(newUser._id);
