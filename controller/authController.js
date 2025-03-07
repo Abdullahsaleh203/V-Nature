@@ -89,7 +89,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 })
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
-        // roles ['admin', 'lead-guide']. role='user'
+        roles ['admin', 'lead-guide']. role='user'
         if (!roles.includes(req.user.role)) {
             return next(new appError('You do not have permission to perform this action', 403));
         }
@@ -153,8 +153,10 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     req.user = user;
     next();
     
+    
 // 4) Log the user in, send JWT
     const token = signToken(user._id);
+    
     
     res.status(200).json({
         status: 'success',
