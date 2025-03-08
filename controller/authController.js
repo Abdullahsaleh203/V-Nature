@@ -153,6 +153,8 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     req.user = user;
     next();
     
+    user.passwordChangedAt = Date.now() - 1000;
+    await user.save();
     
 // 4) Log the user in, send JWT
     const token = signToken(user._id);
