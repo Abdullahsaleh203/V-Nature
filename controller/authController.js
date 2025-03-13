@@ -6,7 +6,7 @@ const asyncHandler = require('../utils/asyncHandler');
 const appError = require('../utils/appError');
 const sendEmail = require('../utils/email');
 
-
+// Create a JWT token
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY,
         {
@@ -15,6 +15,8 @@ const signToken = (id) => {
     );
 }
 
+// Sign up a new user
+// This function will create a new user in the database and send a JWT token to the client.
 exports.signup = asyncHandler(async (req, res, next) => {
     // const newUser = await User.create(req.body);
     const newUser = await User.create({
@@ -36,6 +38,9 @@ exports.signup = asyncHandler(async (req, res, next) => {
     });
 });
 
+// Log in a user and send a JWT token
+// This function will log in a user and send a JWT token to the client.
+// The client can then use this token to access protected routes.
 exports.login = asyncHandler(async (req, res, next) => {
     // 1) Check if email and password exist
     const { email, password } = req.body;
@@ -59,6 +64,12 @@ exports.login = asyncHandler(async (req, res, next) => {
 });
 
 
+/* protect middleware
+    This middleware will check if the user is logged in or not. 
+
+    If the user is logged in, 
+    it will grant access to the protected route. Otherwise, it will return an error message.
+*/
 exports.protect = asyncHandler(async (req, res, next) => {
 
     // 1) Check if token exist and if it's valid
@@ -87,6 +98,9 @@ exports.protect = asyncHandler(async (req, res, next) => {
     req.user = currentUser;
     next();
 })
+// restrictTo middleware
+// This middleware will restrict access to certain routes based on the user's role.
+// For example, if a user is not an admin, they will not be able to access the admin route.
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
@@ -96,6 +110,9 @@ exports.restrictTo = (...roles) => {
     }
 };
 
+
+// forgotPassword middleware
+// This middleware will generate a password reset token and send it to the user's email.
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
     // 1) Get user based on POSTed email
     const user = await User.findOne({ email: req.body.email });
@@ -128,6 +145,8 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     }
 });
 
+// resetPassword middleware
+// This middleware will reset the user's password and send a new JWT token to the client.
 exports.resetPassword = asyncHandler(async (req, res, next) => {
     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
     const user = await User.findOne({
@@ -152,6 +171,9 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     });
 });
 
+
+// updatePassword middleware
+// This middleware will update the user's password and send a new JWT token to the client.
 exports.updatePassword = asyncHandler(async (req, res, next) => {
     // 1) Get user from collection
     const user = await User.findById(req.user.id).select('+password');
@@ -174,35 +196,4 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 
 
 });
-
-
-
-
-
-
-
-
-
-//     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
-//     const user = await User.findOne({
-//         passwordResetToken: hashedToken,
-//         passwordResetExpires: { $gt: Date.now() }
-//     });
-//     // 2) If token has not expired, and there is user, set the new password
-//     if (!user) {
-//         return next(new appError('Token is invalid or has expired', 400));
-//     }
-//     user.password = req.body.password;
-//     user.passwordConfirm = req.body.passwordConfirm;
-//     user.passwordResetToken = undefined;
-//     user.passwordResetExpires = undefined;
-//     await user.save();
-//     // 3) Update changedPasswordAt property for the user
-// // 4) Log the user in, send JWT
-//     const token = signToken(user._id);
-//     res.status(200).json({
-//         status: 'success',
-//         token
-//     });
-// });
 
