@@ -48,12 +48,26 @@ const userSchema = new mongoose.Schema({
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
+    active: {
+        type: Boolean,
+        default: true,
+        select: false
+    },
     createdAt: {
         type: Date,
         default: Date.now()
     }
 });
+ // Query Middleware: runs before .find() and findOne()
+// This middleware will filter out all the inactive users from the query.
+userSchema.pre(/^find/, function (next) {
+    // this points to the current query
+    this.find({ active: { $ne: false } });
+    next();
+});
 
+// Document Middleware: runs before .save() and .create()
+// Encrypt password before saving it to the database
 userSchema.pre('save', function (next) {
     if (!this.isModified('password') || this.isNew) return next();
     this.passwordChangedAt = Date.now() - 1000;
