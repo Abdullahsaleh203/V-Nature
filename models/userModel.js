@@ -74,7 +74,8 @@ userSchema.methods.correctPassword = async function (candidatePassword, userPass
     return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-
+// Check if user changed password after the token was issued
+// This method will return true if the password was changed after the token was issued.
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     if (this.passwordChangedAt) {
         const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
@@ -83,11 +84,13 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     return false;
     // False means NOT changed
 };
+// Create password reset token
+// This method will create a password reset token and return the unencrypted version of the token.
 userSchema.methods.createPasswordResetToken = function () {
     const resetToken= crypto.randomBytes(32).toString('hex');
     
     this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
     return resetToken;
 }
 

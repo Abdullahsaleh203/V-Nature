@@ -148,6 +148,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 // resetPassword middleware
 // This middleware will reset the user's password and send a new JWT token to the client.
 exports.resetPassword = asyncHandler(async (req, res, next) => {
+    // 1) Hash the token
     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
     const user = await User.findOne({
         passwordResetToken: hashedToken,
@@ -193,7 +194,6 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
         status: 'success',
         token
     });
-
 
 });
 
