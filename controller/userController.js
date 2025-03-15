@@ -7,13 +7,13 @@ const appError = require('../utils/appError');
 const filterObj = (obj, ...allowedFields) => {
   let newObj = {};
   Object.keys(obj).forEach(el => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];  
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
   })
   return newObj;
 
 };
 
-exports.getAllUsers = asyncHandler(async (req, res,next) => {
+exports.getAllUsers = asyncHandler(async (req, res, next) => {
   const users = await User.find();
 
   // SEND RESPONSE
@@ -26,10 +26,10 @@ exports.getAllUsers = asyncHandler(async (req, res,next) => {
   });
 });
 
-exports.updateMe = asyncHandler(async(req, res, next) => {
+exports.updateMe = asyncHandler(async (req, res, next) => {
   // 1) Create error if POST password data
   if (req.body.password || req.body.passwordConfirm) {
-    return next( new appError('This route is not for password updates. Please use /updateMe.', 400));
+    return next(new appError('This route is not for password updates. Please use /updateMe.', 400));
   };
   // 2) Filtered out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');

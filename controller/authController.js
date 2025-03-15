@@ -8,12 +8,33 @@ const sendEmail = require('../utils/email');
 
 // Create a JWT token
 const signToken = (id) => {
+
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY,
         {
             expiresIn: process.env.JWT_EXPIRES_IN
         }
     );
 }
+const createSendToken = (user, statusCode, res) => {
+    const token = signToken(user._id);
+    const cookieOptions = {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+        httpOnly: true
+    };
+    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+    res.cookie('jwt', token,cookieOptions);
+    // Remove password from output
+    user.password = undefined;
+    res.status(statusCode).json({
+        status: 'success',
+        token,
+        data: {
+            user
+        }
+    });
+}
+
+
 
 // Sign up a new user
 // This function will create a new user in the database and send a JWT token to the client.
@@ -27,15 +48,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
         role: req.body.role
 
     });
-    const token = signToken(newUser._id);
-
-    res.status(201).json({
-        status: 'success',
-        token,
-        data: {
-            user: newUser
-        }
-    });
+    createSendToken(newUser, 201, res);
 });
 
 // Log in a user and send a JWT token
@@ -55,12 +68,7 @@ exports.login = asyncHandler(async (req, res, next) => {
         return next(new appError('Incorrect email or password', 401));
     }
     // 3) If everything is ok, send token to client
-
-    const token = signToken(user._id);
-    res.status(200).json({
-        status: 'success',
-        token
-    });
+    createSendToken(user, 200, res);
 });
 
 
@@ -165,11 +173,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     user.passwordResetExpires = undefined;
     await user.save();
 
-    const token = signToken(user._id);
-    res.status(200).json({
-        status: 'success',
-        token
-    });
+    createSendToken(user, 200, res);
 });
 
 
@@ -189,11 +193,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
    // User.findByIdAndUpdate will NOT work as intended!
    
     // 4) Log user in, send JWT
-    const token = signToken(user._id);
-    res.status(200).json({
-        status: 'success',
-        token
-    });
+    createSendToken(user, 200, res);
 
 });
 
