@@ -10,21 +10,21 @@ const globalErrorHandler = require('./controller/errorHandel')
 const tourRoute = require('./router/tourRoute');
 const userRouter = require('./router/userRoute');
 const helmet  = require('helmet');
-const ExpressMongoSanitize = require('express-mongo-sanitize');
-
+const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
 
+// Middleware
+
 // Set security HTTP headers
 app.use(helmet());
-// Middleware
+
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
-
 // app.use(express.static(`${__dirname}/public`));
 
 // Data sanitization against NoSQL query injection
