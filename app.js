@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const hpp = require('hpp');
 const appError = require('./utils/appError')
 const globalErrorHandler = require('./controller/errorHandel')
 const tourRoute = require('./router/tourRoute');
@@ -25,10 +26,14 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json({ limit: '10kb' }));
 
 // app.use(express.static(`${__dirname}/public`));
+
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 // Data sanitization against XSS
 app.use(xss());
+// Prevent parameter pollution
+app.use(hpp());
+
 // Limit request from same API
 const limiter = rateLimit({
     max: 100,
