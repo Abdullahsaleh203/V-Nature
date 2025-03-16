@@ -7,7 +7,7 @@ const appError = require('./utils/appError')
 const globalErrorHandler = require('./controller/errorHandel')
 const tourRoute = require('./router/tourRoute');
 const userRouter = require('./router/userRoute');
-const { default: helmet } = require('helmet');
+const helmet  = require('helmet');
 
 
 const app = express();
