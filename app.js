@@ -32,7 +32,16 @@ app.use(mongoSanitize());
 // Data sanitization against XSS
 app.use(xss());
 // Prevent parameter pollution
-app.use(hpp());
+app.use(hpp({
+    whitelist: [
+        'duration',
+        'ratingsQuantity',
+        'ratingsAverage',
+        'maxGroupSize',
+        'difficulty',
+        'price'
+    ]
+}));
 
 // Limit request from same API
 const limiter = rateLimit({
