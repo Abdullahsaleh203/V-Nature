@@ -9,8 +9,8 @@ const appError = require('./utils/appError')
 const globalErrorHandler = require('./controller/errorHandel')
 const tourRoute = require('./router/tourRoute');
 const userRouter = require('./router/userRoute');
-const helmet  = require('helmet');
-const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+
 
 const app = express();
 
@@ -52,7 +52,7 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // Add request time to request object
-app.use((req,res ,next)=>{
+app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     // console.log(req.headers);
     next();
@@ -63,7 +63,7 @@ app.use('/api/v1/users', userRouter);
 
 // Middleware for unhandled routes
 app.all('*', (req, res, next) => {
-    next(new appError(`Can't find ${req.originalUrl} on this server`,404));
+    next(new appError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(globalErrorHandler);

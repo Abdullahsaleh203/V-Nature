@@ -39,8 +39,9 @@ exports.getAllTours = asyncHandler(async (req, res, next) => {
 });
   
 // GET A SINGLE TOUR
-exports.getTour = asyncHandler(async (req, res,next) => {
-  const tour = await Tour.findById(req.params.id);
+exports.getTour = asyncHandler(async (req, res, next) => {
+  // populate is used to get the data from the referenced model
+  const tour = await Tour.findById(req.params.id).populate('guides');
   // const tour = await Tour.findOne({_id: req.params.id});  // same as above
   if (!tour) {
     return next(new appError('No tour found with that ID', 404))
