@@ -135,15 +135,9 @@ tourSchema.pre('save', function (next) {
 //     this.guides = await Promise.all(guidesPromises);
 //     next();
 // });
-// tourSchema.pre('save', function(next) {
-//   console.log('Will save document...');
-//   next();
-// });
 
-// tourSchema.post('save', function(doc, next) {
-//   console.log(doc);
-//   next();
-// });
+
+
 
 // QUERY MIDDLEWARE
 
@@ -153,7 +147,7 @@ tourSchema.pre('find', function(next) {
     // path is the name of the field in the model where the reference is stored
     path: 'guides',
     // select is used to select the fields that we want to display in the output
-    select: '-__v -passwordChangedAt'
+    select: '-__v -passwordChangedAt -createdAt -role'
   })
   next();
 })
