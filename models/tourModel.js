@@ -151,6 +151,7 @@ tourSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
 });
+
 tourSchema.post(/^find/, function (doc,next) {
   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
   // console.log(doc);
@@ -164,38 +165,8 @@ tourSchema.pre('aggregate', function (next) {
   next();
 })
 
-//   startLocation: {
-//     // GeoJSON
-//     type: {
-//       type: String,
-//       default: 'Point',
-//       enum: ['Point']
-//     },
-//     coordinates: [Number],
-//     address: String,
-//     description: String
-//   },
-//   locations: [
-//     {
-//       type: {
-//         type: String,
-//         default: 'Point',
-//         enum: ['Point']
-//       },
-//       coordinates: [Number],
-//       address: String,
-//       description: String,
-//       day: Number
-//     }
-//   ],
-//   guides: [
-//     {
-//       type: mongoose.Schema.ObjectId,
-//       ref: 'User'
-//     }
-//   ]
-// }
-// );
+
+
 
 // tourSchema.index({ price: 1 });
 // tourSchema.index({ price: 1, ratingsAverage: -1 });
@@ -220,7 +191,6 @@ tourSchema.pre('aggregate', function (next) {
 
 
 // QUERY MIDDLEWARE
-// tourSchema.pre('find', function(next) {
 // tourSchema.pre(/^find/, function(next) {
 //   this.find({ secretTour: { $ne: true } });
 
@@ -237,10 +207,7 @@ tourSchema.pre('aggregate', function (next) {
 //   next();
 // });
 
-// tourSchema.post(/^find/, function(docs, next) {
-//   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-//   next();
-// });
+
 
 // AGGREGATION MIDDLEWARE
 // tourSchema.pre('aggregate', function(next) {
