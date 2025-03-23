@@ -4,14 +4,14 @@ const reviewSchema = mongoose.Schema(
 {
 	
 review:{
-	string,
-	require :[true,"Review can't be empty!"]
+	type: String,
+	required :[true,"Review can't be empty!"]
 	},
 	ratting:{
-		type:number,
+		type: Number,
 		min:1,
-		mix:5,
-		require:true
+		max:5,
+		required: true
 	},
 	createAt:{
 		type:Date,
@@ -20,12 +20,12 @@ review:{
 	tour:{
 		type :mongoose.Schema.ObjectId,
 		ref:'Tour',
-		require:[true,'Review must belong to a tour']
+		required:[true,'Review must belong to a tour']
 	}, 
 	user:{
 		type :mongoose.Schema.ObjectId,
 		ref:'User',
-		require:[true,'Review must belong to a user']
+		required:[true,'Review must belong to a user']
 	}
 
 });
