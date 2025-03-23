@@ -1,4 +1,5 @@
-const mongoose =require('mongoose')
+const mongoose =require('mongoose');
+const { path } = require('../app');
 
 const reviewSchema = mongoose.Schema(
 {
@@ -7,7 +8,7 @@ review:{
 	type: String,
 	required :[true,"Review can't be empty!"]
 	},
-	ratting:{
+	rating:{
 		type: Number,
 		min:1,
 		max:5,
@@ -29,6 +30,23 @@ review:{
 	}
 
 });
+
+
+// Prevent user from submitting more than one review per tour
+// reviewSchema.index({tour:1,user:1},{unique:true});
+
+// Populate user and tour fields when querying reviews
+reviewSchema.pre(/^find/,function(next){
+	this.populate({
+		path:'tour',
+		select:'name'
+	}).populate({
+	path:'user',
+	select:'name photo'
+	});
+	next();
+});
+
 
 const Review = mongoose.model('Review',reviewSchema);
 
