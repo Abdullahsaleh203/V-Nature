@@ -2,6 +2,9 @@ const express = require('express');
 const tourRoute = require('../controller/tourController');
 const authController = require('../controller/authController');
 const router = express.Router();
+const reviewController = require('./../controller/reviewController');
+
+
 
 // router.param('id',(req,res,next,val)=>{
 //     console.log(`Tour id is: ${val}`);
@@ -29,4 +32,8 @@ router.route('/:id')
     .patch(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.updateTour)
     .delete(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.deleteTour);
 
+
+router.route('/:tourId/reviews')
+    .post(authController.protect, authController.restrictTo('user'), reviewController.createReview)
+    .get(reviewController.getAllReviews);
 module.exports = router;
