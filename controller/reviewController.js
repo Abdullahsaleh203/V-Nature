@@ -17,6 +17,12 @@ exports.getAllReviews = asyncHandler(async (req, res, next) => {
 
 //create a review
 exports.createReview = asyncHandler(async (req, res, next) => { 
+    // const newReview = await new Review({
+    //     review: req.body.review,
+    //     ratting: req.body.ratting,
+    //     user: req.user.id,
+    //     tour: req.body.tour
+    // })
     const newReview = await Review.create(req.body);
     res.status(201).json({
         status: 'success',
