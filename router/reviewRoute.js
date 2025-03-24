@@ -1,7 +1,7 @@
-const reviewController = require('./../controller/reviewController');
 const express = require('express');
-const router = express.Router();
+const reviewController = require('./../controller/reviewController');
 const authController = require('./../controller/authController');
+const router = express.Router();
 
 router.route('/')
     .get(reviewController.getAllReviews)

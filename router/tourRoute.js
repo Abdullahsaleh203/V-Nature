@@ -1,10 +1,13 @@
 const express = require('express');
 const tourRoute = require('../controller/tourController');
 const authController = require('../controller/authController');
-const router = express.Router();
 const reviewController = require('./../controller/reviewController');
+const reviewRoter = require('./reviewRoute');
+const router = express.Router();
 
 
+// nested routes: tour/:tourId/reviews
+router.use('/:tourId/reviews', reviewRoter);
 
 // router.param('id',(req,res,next,val)=>{
 //     console.log(`Tour id is: ${val}`);
@@ -34,7 +37,7 @@ router.route('/:id')
 
 // reviews tour
 // Nested routes
-router.route('/:tourId/reviews')
-    .post(authController.protect, authController.restrictTo('user'), reviewController.createReview)
-    .get(reviewController.getAllReviews);
+// router.route('/:tourId/reviews')
+//     .post(authController.protect, authController.restrictTo('user'), reviewController.createReview)
+//     .get(reviewController.getAllReviews);
 module.exports = router;
