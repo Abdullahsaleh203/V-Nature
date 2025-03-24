@@ -27,8 +27,9 @@ exports.createReview = asyncHandler(async (req, res, next) => {
     //     tour: req.body.tour
     // }).save();
     // check if the user has already reviewed the tour
-    if (!req.bady.tour) req.body.tour = req.params.tourId;
+    if (!req.body.tour) req.body.tour = req.params.tourId;
     if (!req.body.user) req.body.user = req.user.id;
+    
     const newReview = await Review.create(req.body);
     res.status(201).json({
         status: 'success',

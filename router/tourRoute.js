@@ -3,7 +3,7 @@ const tourRoute = require('../controller/tourController');
 const authController = require('../controller/authController');
 const reviewController = require('./../controller/reviewController');
 const reviewRoter = require('./reviewRoute');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 
 // nested routes: tour/:tourId/reviews
@@ -25,7 +25,7 @@ router.route('/monthly-plan/:year')
 router
     .route('/')
     // .get(tourRoute.getAllTours)
-    .get(authController.protect,authController.restrictTo('admin','lead-guide'),tourRoute.getAllTours)
+    .get(authController.protect,authController.restrictTo('admin','lead-guide',),tourRoute.getAllTours)
     .post(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.createTour);
 
 
