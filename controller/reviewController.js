@@ -5,7 +5,10 @@ const appError = require('./../utils/appError');
 
 // GET ALL REVIEWS
 exports.getAllReviews = asyncHandler(async (req, res, next) => { 
-    const review = await Review.find();
+    let filter = {};
+    // allow nested routes
+    if (req.params.tourId) filter = { tour: req.params.tourId };
+    const review = await Review.find(filter);
     res.status(200).json({
         status: 'success',
         results: review.length,
