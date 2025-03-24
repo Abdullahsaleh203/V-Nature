@@ -1,7 +1,11 @@
 const express = require('express');
 const reviewController = require('./../controller/reviewController');
 const authController = require('./../controller/authController');
-const router = express.Router();
+
+// make sure to use the same router instance as the parent route
+// so that the mergeParams option works
+const router = express.Router({mergeParams: true});
+
 
 router.route('/')
     .get(reviewController.getAllReviews)
