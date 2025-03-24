@@ -32,7 +32,8 @@ router.route('/:id')
     .patch(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.updateTour)
     .delete(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.deleteTour);
 
-
+// reviews tour
+// Nested routes
 router.route('/:tourId/reviews')
     .post(authController.protect, authController.restrictTo('user'), reviewController.createReview)
     .get(reviewController.getAllReviews);
