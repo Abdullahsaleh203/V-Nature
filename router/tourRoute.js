@@ -1,10 +1,13 @@
 const express = require('express');
 const tourRoute = require('../controller/tourController');
 const authController = require('../controller/authController');
-const router = express.Router();
 const reviewController = require('./../controller/reviewController');
+const reviewRoter = require('./reviewRoute');
+const router = express.Router({mergeParams: true});
 
 
+// nested routes: tour/:tourId/reviews
+router.use('/:tourId/reviews', reviewRoter);
 
 // router.param('id',(req,res,next,val)=>{
 //     console.log(`Tour id is: ${val}`);
@@ -22,7 +25,7 @@ router.route('/monthly-plan/:year')
 router
     .route('/')
     // .get(tourRoute.getAllTours)
-    .get(authController.protect,authController.restrictTo('admin','lead-guide'),tourRoute.getAllTours)
+    .get(authController.protect,authController.restrictTo('admin','lead-guide',),tourRoute.getAllTours)
     .post(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.createTour);
 
 
@@ -32,8 +35,9 @@ router.route('/:id')
     .patch(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.updateTour)
     .delete(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.deleteTour);
 
-
-router.route('/:tourId/reviews')
-    .post(authController.protect, authController.restrictTo('user'), reviewController.createReview)
-    .get(reviewController.getAllReviews);
+// reviews tour
+// Nested routes
+// router.route('/:tourId/reviews')
+//     .post(authController.protect, authController.restrictTo('user'), reviewController.createReview)
+//     .get(reviewController.getAllReviews);
 module.exports = router;
