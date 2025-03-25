@@ -1,7 +1,7 @@
 const Review = require('./../models/reviewModel');
 const asyncHandler = require('./../utils/asyncHandler');
 const appError = require('./../utils/appError');
-
+const factory = require('./handlerFactory');
 
 // GET ALL REVIEWS
 exports.getAllReviews = asyncHandler(async (req, res, next) => { 
@@ -38,3 +38,7 @@ exports.createReview = asyncHandler(async (req, res, next) => {
         }
     });
 });
+// UPDATE A REVIEW
+exports.updateReview = factory.updateOne(Review);
+// DELETE A REVIEW
+exports.deleteReview = factory.deleteOne(Review);
