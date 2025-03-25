@@ -42,3 +42,31 @@ exports.createOne = Model => asyncHandler(async (req, res,next) => {
         })
       })
       
+// Get documents by query
+exports.getAll = (Model, popOptions) => asyncHandler(async (req, res, next) => {
+    let query = Model.find();
+    if (popOptions) query = query.populate(popOptions);
+    const doc = await query;
+    res.status(200).json({
+        status: 'success',
+        results: doc.length,
+        data: {
+            doc
+        }
+    });
+});
+// Get one document by ID
+exports.getOne = (Model, popOptions) => asyncHandler(async (req, res, next) => {
+    let query = Model.findById(req.params.id);
+    if (popOptions) query = query.populate(popOptions);
+    const doc = await query;
+    if (!doc) {
+        return next(new appError('No document found with that ID', 404))
+    }
+    res.status(200).json({
+        status: 'success',
+        data: {
+            doc
+        }
+    });
+});
