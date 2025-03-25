@@ -17,24 +17,12 @@ exports.getAllReviews = asyncHandler(async (req, res, next) => {
         }
     });
 });
-// set tour and user ids in the request body
 exports.setTourUserIds = (req, res, next) => {
     // check if the user has already reviewed the tour
     if (!req.body.tour) req.body.tour = req.params.tourId;
     if (!req.body.user) req.body.user = req.user.id;
     next();
 }
-//create a review
-exports.createReview = asyncHandler(async (req, res, next) => {     
-    const newReview = await Review.create(req.body);
-    res.status(201).json({
-        status: 'success',
-        data: {
-            newReview
-        }
-    });
-});
-// UPDATE A REVIEW
+exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
-// DELETE A REVIEW
 exports.deleteReview = factory.deleteOne(Review);

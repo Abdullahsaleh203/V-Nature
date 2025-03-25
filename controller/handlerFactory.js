@@ -1,4 +1,4 @@
-const asyncHandler = require('./../utils/asyncHandler');
+ const asyncHandler = require('./../utils/asyncHandler');
 const appError = require('./../utils/appError');
 
 // delete a document
