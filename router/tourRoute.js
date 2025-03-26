@@ -20,20 +20,30 @@ router.route('/top-5-cheap')
 router.route('/tour-stats')
     .get(tourRoute.getTourStats);
 router.route('/monthly-plan/:year')
-    .get(tourRoute.getMonthPlan);
+    .get(authController.protect, 
+        authController.restrictTo('admin', 'lead-guide','guide'),
+        tourRoute.getMonthPlan);
 
 router
     .route('/')
     // .get(tourRoute.getAllTours)
-    .get(authController.protect,authController.restrictTo('admin','lead-guide',),tourRoute.getAllTours)
-    .post(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.createTour);
+    .get(tourRoute.getAllTours)
+    .post(authController.protect, 
+        authController.restrictTo('admin', 'lead-guide'),
+        tourRoute.createTour);
 
 
 router.route('/:id')
-    .get(authController.protect,tourRoute.getTour)
-    .post(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.createTour)
-    .patch(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.updateTour)
-    .delete(authController.protect, authController.restrictTo('admin', 'lead-guide'),tourRoute.deleteTour);
+    .get(tourRoute.getTour)
+    .post(authController.protect, 
+        authController.restrictTo('admin', 'lead-guide'),
+        tourRoute.createTour)
+    .patch(authController.protect, 
+        authController.restrictTo('admin', 'lead-guide'),
+        tourRoute.updateTour)
+    .delete(authController.protect, 
+        authController.restrictTo('admin', 'lead-guide'),
+        tourRoute.deleteTour);
 
 // reviews tour
 // Nested routes
