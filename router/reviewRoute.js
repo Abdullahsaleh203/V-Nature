@@ -6,13 +6,20 @@ const authController = require('./../controller/authController');
 // so that the mergeParams option works
 const router = express.Router({ mergeParams: true });
 
+router.use(authController.protect);
 
 router.route('/')
-    .get(reviewController.getAllReviews)
-    .post(authController.protect, authController.restrictTo('admin'),reviewController.setTourUserIds, reviewController.createReview);
+.get(reviewController.getAllReviews)
+.post(authController.restrictTo('admin'),
+    reviewController.setTourUserIds, 
+    reviewController.createReview);
 
+// router.use(authController.restrictTo('user', 'admin'));
 router.route('/:id')
-    .patch(reviewController.updateReview)
-    .delete(reviewController.deleteReview)
+    .get(reviewController.gerReview)
+    .patch(authController.restrictTo('user', 'admin'),
+    reviewController.updateReview)
+    .delete(authController.restrictTo('user', 'admin'),
+    reviewController.deleteReview)
 
 module.exports = router;
