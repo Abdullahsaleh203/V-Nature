@@ -1,5 +1,5 @@
 const mongoose =require('mongoose');
-const { path } = require('../app');
+
 
 const reviewSchema = mongoose.Schema(
 {

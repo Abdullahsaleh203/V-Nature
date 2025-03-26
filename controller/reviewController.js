@@ -1,6 +1,6 @@
 const Review = require('./../models/reviewModel');
 const asyncHandler = require('./../utils/asyncHandler');
-const appError = require('./../utils/appError');
+// const appError = require('./../utils/appError');
 const factory = require('./handlerFactory');
 
 // GET ALL REVIEWS
