@@ -83,6 +83,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
+
 // unhash password
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
     return await bcrypt.compare(candidatePassword, userPassword);
