@@ -119,6 +119,10 @@ const tourSchema = new mongoose.Schema(
   toObject: { virtuals: true }
 }
 );
+// indexes are used to improve the performance of the queries
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 // virtuals are not stored in the database
 tourSchema.virtual('reviews', {
   ref: 'Review',
