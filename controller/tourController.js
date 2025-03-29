@@ -2,7 +2,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const asyncHandler = require('./../utils/asyncHandler');
 const appError = require('./../utils/appError');
-
+const factory = require('./handlerFactory');
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-ratingsAverage,price';
@@ -16,42 +16,67 @@ exports.aliasTopTours = (req, res, next) => {
 
 
 // CURD OPERATIONS
+exports.createTour = factory.createOne(Tour);
+exports.updateTour = factory.updateOne(Tour);
+exports.deleteTour = factory.deleteOne(Tour);
+exports.getTour = factory.getOne(Tour);
+exports.getAllTours = factory.getAll(Tour);
 
-// GET ALL TOURS
-exports.getAllTours = asyncHandler(async (req, res, next) => {
-    // EXECUTE QUERY
-    const features = new APIFeatures(Tour.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-  const tours = await features.query;
-
-
-    res.status(200).json({
-      status: 'success',
-      results: tours.length,
-      data: {
-        tours
-      }
-    });
-});
-  
-// GET A SINGLE TOUR
-exports.getTour = asyncHandler(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('reviews');
-  // const tour = await Tour.findOne({_id: req.params.id});  // same as above
-  if (!tour) {
-    return next(new appError('No tour found with that ID', 404))
+exports.getTourWithin = asyncHandler(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(',');
+  const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
+  if (!lat || !lng) {
+    return next(new appError('Please provide latitude and longitude in the format lat,lng.', 400));
   }
+  const tours = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
+  });
   res.status(200).json({
     status: 'success',
+    results: tours.length,
     data: {
-      tour
+      data: tours
     }
   });
+});
 
-  });
+
+// GET ALL TOURS
+// exports.getAllTours = asyncHandler(async (req, res, next) => {
+//     // EXECUTE QUERY
+//     const features = new APIFeatures(Tour.find(), req.query)
+//       .filter()
+//       .sort()
+//       .limitFields()
+//       .paginate();
+//   const tours = await features.query;
+
+
+//     res.status(200).json({
+//       status: 'success',
+//       results: tours.length,
+//       data: {
+//         tours
+//       }
+//     });
+// });
+  
+// GET A SINGLE TOUR
+// exports.getTour = asyncHandler(async (req, res, next) => {
+//   const tour = await Tour.findById(req.params.id).populate('reviews');
+//   // const tour = await Tour.findOne({_id: req.params.id});  // same as above
+//   if (!tour) {
+//     return next(new appError('No tour found with that ID', 404))
+//   }
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       tour
+//     }
+//   });
+
+//   });
   
 
   // const id = req.params.id * 1;
@@ -64,51 +89,53 @@ exports.getTour = asyncHandler(async (req, res, next) => {
   // });
 
 // POST : CREATE A TOUR
-exports.createTour = asyncHandler(async (req, res, next) => {
-  const newTour = await Tour.create(req.body);
+// exports.createTour = asyncHandler(async (req, res, next) => {
+//   const newTour = await Tour.create(req.body);
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      tour: newTour
-    }
-  })
-})
+//   res.status(201).json({
+//     status: 'success',
+//     data: {
+//       tour: newTour
+//     }
+//   })
+// })
+
+
 
 
 
 // PATCH : UPDATE A TOUR
-exports.updateTour = asyncHandler(async (req, res,next) => {
+// exports.updateTour = asyncHandler(async (req, res,next) => {
 
-    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body,{
-      new: true,
-      runValidators: true
-    });
-  if (!tour) {
-    return next(new appError('No tour found with that ID', 404))
-  }
-    res.status(200).json({
-      status: 'success',
-      data: {
-        tour
-      }
-    });
-});
+//     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body,{
+//       new: true,
+//       runValidators: true
+//     });
+//   if (!tour) {
+//     return next(new appError('No tour found with that ID', 404))
+//   }
+//     res.status(200).json({
+//       status: 'success',
+//       data: {
+//         tour
+//       }
+//     });
+// });
 
 // DELETE : DELETE A TOUR
-exports.deleteTour = asyncHandler(async(req, res) => {
+// exports.deleteTour = asyncHandler(async(req, res) => {
 
-  const tour = await Tour.findByIdAndDelete(req.params.id);
+//   const tour = await Tour.findByIdAndDelete(req.params.id);
 
-  if (!tour) {
-    return next(new appError('No tour found with that ID', 404))
-  }
-  res.status(204).json({
-    status: 'success',
-    data: null
-  })
+//   if (!tour) {
+//     return next(new appError('No tour found with that ID', 404))
+//   }
+//   res.status(204).json({
+//     status: 'success',
+//     data: null
+//   })
 
-});
+// });
 // AGGREGATION PIPELINE
 exports.getTourStats = asyncHandler(async (req, res,next) => {
 

@@ -1,6 +1,7 @@
 const asyncHandler = require('./../utils/asyncHandler');
 const appError = require('./../utils/appError');
 const APIFeatures = require('./../utils/apiFeatures');
+
 // delete a document
 exports.deleteOne = Model => asyncHandler(async (req, res) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
@@ -41,20 +42,6 @@ exports.createOne = Model => asyncHandler(async (req, res,next) => {
           }
         })
       })
-      
-// Get documents by query
-// exports.getAll = (Model, popOptions) => asyncHandler(async (req, res, next) => {
-  //     let query = Model.find();
-  //     if (popOptions) query = query.populate(popOptions);
-  //     const doc = await query;
-  //     res.status(200).json({
-    //         status: 'success',
-    //         results: doc.length,
-    //         data: {
-//             doc
-//         }
-//     });
-// });
 
 // Get documents by query
 exports.getAll = Model=> asyncHandler(async (req, res, next) => {
