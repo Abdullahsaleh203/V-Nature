@@ -122,6 +122,8 @@ const tourSchema = new mongoose.Schema(
 // indexes are used to improve the performance of the queries
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
+// 2dsphere is used to store the geospatial data
+tourSchema.index({ startLocation: '2dsphere' });
 
 // virtuals are not stored in the database
 tourSchema.virtual('reviews', {
@@ -175,20 +177,11 @@ tourSchema.pre(/^find/, function (next) {
 
 
 // AGGREGATION MIDDLEWARE
-tourSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } }});
-  console.log(this.pipeline());
-  next();
-})
-
-
-
-
-// tourSchema.index({ price: 1 });
-// tourSchema.index({ price: 1, ratingsAverage: -1 });
-// tourSchema.index({ slug: 1 });
-// tourSchema.index({ startLocation: '2dsphere' });
-
+// tourSchema.pre('aggregate', function (next) {
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } }});
+//   console.log(this.pipeline());
+//   next();
+// })
 
 
 // Virtual populate
@@ -205,33 +198,6 @@ tourSchema.pre('aggregate', function (next) {
 //   next();
 // });
 
-
-// QUERY MIDDLEWARE
-// tourSchema.pre(/^find/, function(next) {
-//   this.find({ secretTour: { $ne: true } });
-
-//   this.start = Date.now();
-//   next();
-// });
-
-// tourSchema.pre(/^find/, function(next) {
-//   this.populate({
-//     path: 'guides',
-//     select: '-__v -passwordChangedAt'
-//   });
-
-//   next();
-// });
-
-
-
-// AGGREGATION MIDDLEWARE
-// tourSchema.pre('aggregate', function(next) {
-//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-
-//   console.log(this.pipeline());
-//   next();
-// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 

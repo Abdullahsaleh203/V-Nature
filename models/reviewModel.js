@@ -33,7 +33,7 @@ const reviewSchema = mongoose.Schema(
 
 
 // Prevent user from submitting more than one review per tour
-// reviewSchema.index({tour:1,user:1},{unique:true});
+reviewSchema.index({tour:1,user:1},{unique:true});
 
 // Populate user and tour fields when querying reviews
 reviewSchema.pre(/^find/, function (next) {
@@ -76,7 +76,9 @@ reviewSchema.post('save', function () {
 reviewSchema.pre(/^fineOneAnd/, async function (next) { 
 	this.r = await this.findOne();
 	next();
+	// 
 });
+
 reviewSchema.post(/^fineOneAnd/, async function () {
 	// this.r = await this.findOne(); // does NOT work here, query has already executed
 	await this.r.constructor.calcAverageRatings(this.r.tour);
