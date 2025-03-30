@@ -1,4 +1,4 @@
-
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -13,8 +13,14 @@ const reviewRouter = require('./router/reviewRoute');
 const helmet = require('helmet');
 
 const app = express();
-
+// Set view engine to pug
+app.set('view engine', 'pug');
+// Set views directory to views 
+app.set('views', path.join(__dirname, 'views'));
+// Serving static files
+app.use(express.static(path.join(__dirname, 'public')));
 // Middleware
+
 
 // Set security HTTP headers
 app.use(helmet());
@@ -57,6 +63,10 @@ app.use((req, res, next) => {
     // console.log(req.headers);
     next();
 })
+// Routes
+app.get('/',(req,res)=>{
+    res.status(200).render('base',{ title: 'Exciting tours for adventurous people'});
+});
 
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRouter);
