@@ -16,7 +16,7 @@ router.route('/')
 
 // router.use(authController.restrictTo('user', 'admin'));
 router.route('/:id')
-    .get(reviewController.gerReview)
+    .get(reviewController.getReview)
     .patch(authController.restrictTo('user', 'admin'),
     reviewController.updateReview)
     .delete(authController.restrictTo('user', 'admin'),
