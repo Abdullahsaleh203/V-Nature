@@ -10,8 +10,8 @@ const globalErrorHandler = require('./controller/errorHandel')
 const tourRoute = require('./router/tourRoute');
 const userRouter = require('./router/userRoute');
 const reviewRouter = require('./router/reviewRoute');
+const viewRouter = require('./router/viewRoute');
 const helmet = require('helmet');
-
 const app = express();
 // Set view engine to pug
 app.set('view engine', 'pug');
@@ -64,13 +64,12 @@ app.use((req, res, next) => {
     next();
 })
 // Routes
-app.get('/',(req,res)=>{
-    res.status(200).render('base',{ title: 'Exciting tours for adventurous people'});
-});
 
+
+app.use('/', viewRouter)
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/reviews',reviewRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 // Middleware for unhandled routes
 app.all('*', (req, res, next) => {
