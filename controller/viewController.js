@@ -15,7 +15,21 @@ exports.getOverview = asyncHandler(async (req, res, next) => {
 });
 
 exports.getTour = asyncHandler(async (req, res, next) => {
-    res.status(200).render('tour', {
-        title: 'The Forest Hiker Tour'
+    // 1)Get the data , from requested tour (including reviews and guides)
+    const tour = await Tour.findOne({ slug: req.params.slug }).populate({
+        path: 'reviews', fields: 'review rating user'
     });
-});
+    // 2) building the template
+
+    // 3) Render the template using tour data
+    if (!tour) {
+        return next(new AppError('No tour found with that name', 404));
+    }
+    res.status(200).render('tour', {
+        title: `${tour.name} Tour`,
+        tour
+    });
+
+    // 4) Send the response
+    // const tour = await Tour.findById(req.params.id).populate('reviews');
+})

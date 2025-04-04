@@ -9,5 +9,5 @@ router.get('/', viewController.getOverview);
 //         title: 'The Forest Hiker Tour'
 //     });
 // });
-
+router.get('/tour/:slug', viewController.getTour);
 module.exports = router;

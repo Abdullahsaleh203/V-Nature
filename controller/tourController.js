@@ -22,6 +22,8 @@ exports.deleteTour = factory.deleteOne(Tour);
 exports.getTour = factory.getOne(Tour);
 exports.getAllTours = factory.getAll(Tour);
 
+// getting all tours within a certain distance from a point
+// GET TOURS WITHIN A DISTANCE
 exports.getTourWithin = asyncHandler(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
@@ -75,22 +77,27 @@ exports.getDistances = asyncHandler(async (req, res, next) => {
     }
   });
 });
-exports.getTourDetails = asyncHandler(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('reviews');
-  // const tour = await Tour.findOne({_id: req.params.id});  // same as above
-  if (!tour) {
-    return next(new appError('No tour found with that ID', 404))
-  }
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour
-    }
-  });
+
+
+
+
+
+// exports.getTourDetails = asyncHandler(async (req, res, next) => {
+//   const tour = await Tour.findById(req.params.id).populate('reviews');
+//   // const tour = await Tour.findOne({_id: req.params.id});  // same as above
+//   if (!tour) {
+//     return next(new appError('No tour found with that ID', 404))
+//   }
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       tour
+//     }
+//   });
 
   
 
-});
+
 // GET ALL TOURS
 // exports.getAllTours = asyncHandler(async (req, res, next) => {
 //     // EXECUTE QUERY
