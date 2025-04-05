@@ -65,11 +65,6 @@ app.use((req, res, next) => {
 })
 // Routes
 
-
-
-
-
-
 app.use('/', viewRouter)
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRouter);
