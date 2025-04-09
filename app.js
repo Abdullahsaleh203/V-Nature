@@ -5,7 +5,8 @@ const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-const appError = require('./utils/appError')
+const cookieParser = require('cookie-parser');
+const appError  = require('./utils/appError')
 const globalErrorHandler = require('./controller/errorHandel')
 const tourRoute = require('./router/tourRoute');
 const userRouter = require('./router/userRoute');
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 // app.use(express.static(`${__dirname}/public`));
 
 // Data sanitization against NoSQL query injection
@@ -61,6 +63,7 @@ app.use('/api', limiter);
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     // console.log(req.headers);
+    // console.log(req.cookies);
     next();
 })
 // Routes
