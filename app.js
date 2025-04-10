@@ -14,6 +14,7 @@ const reviewRouter = require('./router/reviewRoute');
 const viewRouter = require('./router/viewRoute');
 const helmet = require('helmet');
 const app = express();
+// const swaggerUi = require('swagger-ui-express');
 // Set view engine to pug
 app.set('view engine', 'pug');
 // Set views directory to views 
@@ -50,6 +51,7 @@ app.use(hpp({
         'price'
     ]
 }));
+// app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Limit request from same API
 const limiter = rateLimit({

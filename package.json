@@ -8,7 +8,8 @@
     "dev": "nodemon --legacy-watch --env-file=.env server.js",
     "dev2": "nodemon --trace-warnings --env-file=.env server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "debug": "ndb node server.js"
+    "debug": "ndb node server.js",
+    "swagger": "node swagger.js"
   },
   "author": "Abdallah Saleh",
   "license": "ISC",
@@ -29,6 +30,8 @@
     "nodemailer": "^6.10.0",
     "pug": "^3.0.3",
     "slugify": "^1.6.6",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1",
     "validator": "^13.12.0",
     "xss-clean": "^0.1.4"
   },
