@@ -1,13 +1,25 @@
 const express = require('express');
-// const asyncHandler = require('../utils/asyncHandler');
-const router = express.Router();
 const viewController = require('../controller/viewController');
+// const authController = require('../controllers/authController');
 
-router.get('/', viewController.getOverview);
-// router.get('/tours', (req, res) => {
-//     res.status(200).render('tours', {
-//         title: 'The Forest Hiker Tour'
-//     });
-// });
-router.get('/tour/:slug', viewController.getTour);
+const router = express.Router();
+
+router.get('/',viewController.getOverview);
+router.get('/tour/:slug',viewController.getTour);
+router.get('/login', viewController.getLoginForm);
+// // router.use(viewsController.alerts);
+
+// // router.get('/', authController.isLoggedIn, viewsController.getOverview);
+
+// // router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
+// // router.get('/me', authController.protect, viewsController.getAccount);
+
+// // router.get('/my-tours', authController.protect, viewsController.getMyTours);
+
+// // router.post(
+// //   '/submit-user-data',
+// //   authController.protect,
+// //   viewsController.updateUserData
+// // );
+
 module.exports = router;

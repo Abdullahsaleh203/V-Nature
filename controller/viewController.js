@@ -33,3 +33,9 @@ exports.getTour = asyncHandler(async (req, res, next) => {
     // 4) Send the response
     // const tour = await Tour.findById(req.params.id).populate('reviews');
 })
+
+exports.getLoginForm = (req, res) => {
+    res.status(200).render('login', {
+        title: 'Login'
+    });
+}
