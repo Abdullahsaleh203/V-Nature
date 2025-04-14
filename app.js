@@ -14,9 +14,10 @@ const reviewRouter = require('./router/reviewRoute');
 const viewRouter = require('./router/viewRoute');
 // const bookingRouter = require('./router/bookingRoutes');
 // const bookingController = require('./controller/bookingController');
+
 const helmet = require('helmet');
 const app = express();
-const swaggerUi = require('swagger-ui-express');
+// const swaggerUi = require('swagger-ui-express');
 // Set view engine to pug
 app.set('view engine', 'pug');
 // Set views directory to views 

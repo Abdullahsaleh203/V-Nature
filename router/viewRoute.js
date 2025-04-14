@@ -7,19 +7,19 @@ const router = express.Router();
 router.get('/',viewController.getOverview);
 router.get('/tour/:slug',viewController.getTour);
 router.get('/login', viewController.getLoginForm);
-// // router.use(viewsController.alerts);
+// router.use(viewsController.alerts);
 
-// // router.get('/', authController.isLoggedIn, viewsController.getOverview);
+// router.get('/', authController.isLoggedIn, viewsController.getOverview);
 
-// // router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
-// // router.get('/me', authController.protect, viewsController.getAccount);
+// router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
+// router.get('/me', authController.protect, viewsController.getAccount);
 
-// // router.get('/my-tours', authController.protect, viewsController.getMyTours);
+// router.get('/my-tours', authController.protect, viewsController.getMyTours);
 
-// // router.post(
-// //   '/submit-user-data',
-// //   authController.protect,
-// //   viewsController.updateUserData
-// // );
+// router.post(
+//   '/submit-user-data',
+//   authController.protect,
+//   viewsController.updateUserData
+// );
 
 module.exports = router;
