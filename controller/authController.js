@@ -85,6 +85,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')
     ) {
         token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies.jwt) {
+        token = req.cookies.jwt;
     }
     if (!token) {
         return next(new appError('You are not logged in! Please log in to get access.', 401));
@@ -104,6 +106,30 @@ exports.protect = asyncHandler(async (req, res, next) => {
     };
     // 5) If everything is ok, grant access to protected route
     req.user = currentUser;
+    next();
+})
+// only for rendered pages, no errors
+// This middleware will check if the user is logged in or not.
+exports.isLoggedIn = asyncHandler(async (req, res, next) => {
+
+
+    if (req.cookies.jwt) {
+        // validate token
+        const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+
+        //  Check if user still exists
+        const currentUser = await User.findById(decoded.id);
+        if (!currentUser) {
+            return next();
+        }
+        //  Check if user changed password after the token was issued
+        if (currentUser.changedPasswordAfter(decoded.iat)) {
+            return next()
+        };
+        //  there is a logged in user
+        res.locals.user = currentUser;
+        // req.user = currentUser;
+    }
     next();
 })
 // restrictTo middleware
