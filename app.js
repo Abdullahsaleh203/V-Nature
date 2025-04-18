@@ -55,6 +55,7 @@ app.use(hpp({
         'price'
     ]
 }));
+
 // app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Limit request from same API
