@@ -1,5 +1,5 @@
 /* eslint-disable */
-// import axios from 'axios';
+import axios from 'axios';
 // import { showAlert } from './alerts';
 // // const axios = require('axios');
 // // const { showAlert } = require('./alerts');
@@ -38,7 +38,7 @@
 //     showAlert('error', 'Error logging out! Try again.');
 //   }
 // };
-const login = async (email, password) => {
+export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
