@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
@@ -26,7 +28,6 @@ app.set('views', path.join(__dirname, 'views'));
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 // Middleware
-
 
 // Set security HTTP headers
 app.use(
@@ -84,7 +85,7 @@ app.use('/api', limiter);
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     // console.log(req.headers);
-    console.log(req.cookies);
+    // console.log(req.cookies);
     next();
 })
 // Routes

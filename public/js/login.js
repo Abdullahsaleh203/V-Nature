@@ -1,8 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
 import { showAlert } from './alerts';
-// // const axios = require('axios');
-// // const { showAlert } = require('./alerts');
 
 // export const login = async (email, password) => {
 //   try {
@@ -26,18 +24,6 @@ import { showAlert } from './alerts';
 //   }
 // };
 
-// export const logout = async () => {
-//   try {
-//     const res = await axios({
-//       method: 'GET',
-//       url: '/api/v1/users/logout'
-//     });
-//     if ((res.data.status = 'success')) location.reload(true);
-//   } catch (err) {
-//     console.log(err.response);
-//     showAlert('error', 'Error logging out! Try again.');
-//   }
-// };
 export const login = async (email, password) => {
   try {
     const res = await axios({
@@ -65,3 +51,16 @@ document.querySelector('.form').addEventListener('submit', e => {
   const password = document.getElementById('password').value;
   login(email, password);
 });
+
+export const logout = async () => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: 'http://127.0.0.1:8000/api/v1/users/logout'
+    });
+    if ((res.data.status = 'success')) location.reload(true);
+  } catch (err) {
+    console.log(err.response);
+    showAlert('error', 'Error logging out! Try again.');
+  }
+};
