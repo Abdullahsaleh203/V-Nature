@@ -9,3 +9,4 @@ dev-data/data/import-dev-data.js
 .gitignore
 views/base2.pug
 .gitignore
+.cache
