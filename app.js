@@ -7,17 +7,17 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 
-const appError  = require('./utils/appError')
-const globalErrorHandler = require('./controller/errorHandel')
+const appError = require('./utils/appError');
+const globalErrorHandler = require('./controller/errorHandel');
 const tourRoute = require('./router/tourRoute');
 const userRouter = require('./router/userRoute');
 const reviewRouter = require('./router/reviewRoute');
 const viewRouter = require('./router/viewRoute');
 // const bookingRouter = require('./router/bookingRoutes');
-// const bookingController = require('./controller/bookingController');
-
 const helmet = require('helmet');
+
 const app = express();
+// const bookingController = require('./controller/bookingController');
 // const swaggerUi = require('swagger-ui-express');
 // Set view engine to pug
 app.set('view engine', 'pug');
@@ -29,7 +29,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Set security HTTP headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://js.stripe.com'],
+        connectSrc: ["'self'", 'ws://127.0.0.1:*', 'http://127.0.0.1:*'],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
+      },
+    },
+  })
+);
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -46,10 +60,10 @@ app.use(mongoSanitize());
 app.use(xss());
 // Prevent parameter pollution
 app.use(hpp({
-    whitelist: [
-        'duration',
-        'ratingsQuantity',
-        'ratingsAverage',
+  whitelist: [
+    'duration',
+    'ratingsQuantity',
+    'ratingsAverage',
         'maxGroupSize',
         'difficulty',
         'price'
@@ -88,5 +102,3 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = app;
-
-

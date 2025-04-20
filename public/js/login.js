@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
-// import { showAlert } from './alerts';
+import { showAlert } from './alerts';
 // // const axios = require('axios');
 // // const { showAlert } = require('./alerts');
 
