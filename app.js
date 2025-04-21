@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
@@ -7,17 +9,17 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 
-const appError  = require('./utils/appError')
-const globalErrorHandler = require('./controller/errorHandel')
+const appError = require('./utils/appError');
+const globalErrorHandler = require('./controller/errorHandel');
 const tourRoute = require('./router/tourRoute');
 const userRouter = require('./router/userRoute');
 const reviewRouter = require('./router/reviewRoute');
 const viewRouter = require('./router/viewRoute');
 // const bookingRouter = require('./router/bookingRoutes');
-// const bookingController = require('./controller/bookingController');
-
 const helmet = require('helmet');
+
 const app = express();
+// const bookingController = require('./controller/bookingController');
 // const swaggerUi = require('swagger-ui-express');
 // Set view engine to pug
 app.set('view engine', 'pug');
@@ -27,15 +29,29 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 // Middleware
 
-
 // Set security HTTP headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://js.stripe.com'],
+        connectSrc: ["'self'", 'ws://127.0.0.1:*', 'http://127.0.0.1:*'],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
+      },
+    },
+  })
+);
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
 // Body parser, reading data from body into req.body
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 // app.use(express.static(`${__dirname}/public`));
@@ -46,10 +62,10 @@ app.use(mongoSanitize());
 app.use(xss());
 // Prevent parameter pollution
 app.use(hpp({
-    whitelist: [
-        'duration',
-        'ratingsQuantity',
-        'ratingsAverage',
+  whitelist: [
+    'duration',
+    'ratingsQuantity',
+    'ratingsAverage',
         'maxGroupSize',
         'difficulty',
         'price'
@@ -70,7 +86,7 @@ app.use('/api', limiter);
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     // console.log(req.headers);
-    console.log(req.cookies);
+    // console.log(req.cookies);
     next();
 })
 // Routes
@@ -88,5 +104,3 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = app;
-
-

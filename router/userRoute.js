@@ -1,10 +1,15 @@
+/* eslint-disable */
 const express = require('express');
+const multer = require('multer');
 const userController = require('./../controller/userController');
 const authController = require('./../controller/authController');
+
+const upload = multer({ dest: 'public/img/users' });
 const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+router.get('/logout', authController.logout);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
