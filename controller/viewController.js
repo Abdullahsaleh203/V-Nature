@@ -1,6 +1,7 @@
 const express = require('express');
 const asyncHandler = require('../utils/asyncHandler');
 const Tour = require('../models/tourModel');
+const AppError = require('../utils/appError');
 
 exports.getOverview = asyncHandler(async (req, res, next) => {
 // 1) Get tour data from collection
