@@ -25,7 +25,7 @@ router.patch('/updateMyPassword',
 router.get('/Me', 
     userController.getMe,
     userController.getUser)
-router.patch('/updateMe',
+router.patch('/updateMe',upload.single('photo'),
     userController.getMe,  
     userController.updateMe);
 router.delete('/deleteMe',

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require('fs');
 const User = require('./../models/userModel');
 const asyncHandler = require('./../utils/asyncHandler');
@@ -31,7 +32,10 @@ exports.getMe = (req,res, next)=>{
   next()
 }
 
+
 exports.updateMe = asyncHandler(async (req, res, next) => {
+  console.log(req.file);
+  console.log(req.body);
   // 1) Create error if POST password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(new appError('This route is not for password updates. Please use /updateMe.', 400));
