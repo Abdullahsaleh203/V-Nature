@@ -66,28 +66,28 @@ app.use(hpp({
     'duration',
     'ratingsQuantity',
     'ratingsAverage',
-        'maxGroupSize',
-        'difficulty',
-        'price'
-    ]
+    'maxGroupSize',
+    'difficulty',
+    'price'
+  ]
 }));
 
 // app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Limit request from same API
 const limiter = rateLimit({
-    max: 100,
-    windowMs: 60 * 60 * 1000,
-    message: 'Too many request from this IP, please try again in an hour'
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many request from this IP, please try again in an hour'
 });
 app.use('/api', limiter);
 
 // Add request time to request object
 app.use((req, res, next) => {
-    req.requestTime = new Date().toISOString();
-    // console.log(req.headers);
-    // console.log(req.cookies);
-    next();
+  req.requestTime = new Date().toISOString();
+  // console.log(req.headers);
+  // console.log(req.cookies);
+  next();
 })
 // Routes
 
@@ -98,7 +98,7 @@ app.use('/api/v1/reviews', reviewRouter);
 
 // Middleware for unhandled routes
 app.all('*', (req, res, next) => {
-    next(new appError(`Can't find ${req.originalUrl} on this server`, 404));
+  next(new appError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(globalErrorHandler);
