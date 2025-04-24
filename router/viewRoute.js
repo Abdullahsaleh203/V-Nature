@@ -18,10 +18,10 @@ router.get('/me', authController.protect, viewController.getAccount);
 
 // router.get('/my-tours', authController.protect, viewsController.getMyTours);
 
-router.post(
-  '/submit-user-data',
-  authController.protect,
-  viewController.updateUserData
-);
+// router.post(
+//   '/submit-user-data',
+//   authController.protect,
+//   viewController.updateUserData
+// );
 
 module.exports = router;

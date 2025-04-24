@@ -1,10 +1,9 @@
 /* eslint-disable */
 const express = require('express');
-const multer = require('multer');
 const userController = require('./../controller/userController');
 const authController = require('./../controller/authController');
 
-const upload = multer({ dest: 'public/img/users' });
+
 const router = express.Router();
 
 router.post('/signup', authController.signup);
@@ -13,11 +12,7 @@ router.get('/logout', authController.logout);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-
-
 router.use(authController.protect);
-
-
 
 router.patch('/updateMyPassword',  
     authController.updatePassword);
@@ -25,7 +20,7 @@ router.patch('/updateMyPassword',
 router.get('/Me', 
     userController.getMe,
     userController.getUser)
-router.patch('/updateMe',upload.single('photo'),
+router.patch('/updateMe',userController.uploadUserPhoto,
     userController.getMe,  
     userController.updateMe);
 router.delete('/deleteMe',
