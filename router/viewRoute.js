@@ -14,7 +14,6 @@ router.get('/me', authController.protect, viewController.getAccount);
 
 // router.get('/', authController.isLoggedIn, viewsController.getOverview);
 
-
 // router.get('/my-tours', authController.protect, viewsController.getMyTours);
 
 // router.post(

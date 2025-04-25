@@ -1,18 +1,20 @@
 /* eslint-disable */
 const multer = require('multer');
+const sharp = require('sharp');
 const User = require('./../models/userModel');
 const asyncHandler = require('./../utils/asyncHandler');
 const appError = require('../utils/appError');
 
 
-const multerStorage = multer.diskStorage({
-  destnation: (req, file, cb) => { 
-    cb(null, 'public/img/users' )
-  }, filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
-    cb(null, `user-$req.user.id}-${Date.now()}.${ext}`)
-  }
-});
+const multerStorage = multer.memoryStorage();
+// const multerStorage = multer.diskStorage({
+//   destnation: (req, file, cb) => {
+//     cb(null, 'public/img/users')
+//   }, filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
+//   }
+// });
 
 const multerFilter = (req, file, cb) => {
   // 1) Check if the file is an image
@@ -29,6 +31,17 @@ const upload = multer({
 
 exports.uploadUserPhoto = upload.single('photo');
 
+exports.resizeUserPhoto = asyncHandler(async (req, res, next) => {
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+  if (!req.file) return next();
+
+  sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`);
+  next();
+})
 const filterObj = (obj, ...allowedFields) => {
   let newObj = {};
   Object.keys(obj).forEach(el => {
@@ -51,7 +64,7 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.getMe = (req,res, next)=>{
+exports.getMe = (req, res, next) => {
   req.params.id = req.user.id
   next()
 }
@@ -59,13 +72,16 @@ exports.getMe = (req,res, next)=>{
 
 exports.updateMe = asyncHandler(async (req, res, next) => {
   console.log(req.file);
-  console.log(req.body);
+  // console.log(req.body);
   // 1) Create error if POST password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(new appError('This route is not for password updates. Please use /updateMe.', 400));
   };
   // 2) Filtered out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');
+  if (req.file) filteredBody.photo = req.file.filename;
+  // console.log(filteredBody);
+
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
@@ -107,6 +123,7 @@ exports.createUser = (req, res) => {
     message: 'This route is not yet defined!'
   });
 };
+
 exports.updateUser = (req, res) => {
   res.status(500).json({
     status: 'error',

@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware
 
 // Set security HTTP headers
+// app.use(helmet());
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -54,7 +55,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
-// app.use(express.static(`${__dirname}/public`));
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
