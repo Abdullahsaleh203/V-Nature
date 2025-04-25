@@ -14,22 +14,22 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 
 router.use(authController.protect);
 
-router.patch('/updateMyPassword',  
+router.patch('/updateMyPassword',
     authController.updatePassword);
 
-router.get('/Me', 
+router.get('/Me',
     userController.getMe,
     userController.getUser)
-router.patch('/updateMe',userController.uploadUserPhoto,userController.resizeUserPhoto,
-    userController.getMe,  
+router.patch('/updateMe', userController.uploadUserPhoto, userController.resizeUserPhoto,
+    userController.getMe,
     userController.updateMe);
 router.delete('/deleteMe',
-    userController.getMe,  
+    userController.getMe,
     userController.deleteMe);
 
 // only admin can access this route
-router.use(authController.restrictTo('admin'));  
-  
+router.use(authController.restrictTo('admin'));
+
 router.route('/')
     .get(userController.getAllUsers)
     .post(userController.createUser);

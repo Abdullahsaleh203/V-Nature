@@ -1,20 +1,62 @@
+/* eslint-disable */
+const multer = require('multer');
+const sharp = require('sharp');
 const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const asyncHandler = require('./../utils/asyncHandler');
 const appError = require('./../utils/appError');
 const factory = require('./handlerFactory');
+
+
+const multerStorage = multer.memoryStorage();
+const multerFilter = (req, file, cb) => {
+  // 1) Check if the file is an image
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new appError('Not an image! Please upload only images.', 400), false);
+  }
+};
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+exports.uploadToureImages = upload.fields([
+  { name: 'imageCover', maxCount:1},
+  { name: 'image', maxCount: 3 }
+])
+ // upload.single('imageCover'),
+// upload.array('image', 3)
+exports.resizeTourImages = asyncHandler(async (req, res, next) => {
+  if (!req.files.imageCover || !req.files.image) return next();
+  // 1) Cover image
+  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(2000, 1333)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/tours/${req.body.imageCover}`);
+  // 2) Images
+  req.body.images = [];
+  await Promise.all(
+    req.files.image.map(async (file, i) => {
+      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+      await sharp(file.buffer)
+        .resize(2000, 1333)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/tours/${filename}`);
+      req.body.images.push(filename);
+    })
+  );
+  next();
+});
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-ratingsAverage,price';
   req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
   next();
 }
-
-// const tours = JSON.parse(
-//   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-// );
-
-
 // CURD OPERATIONS
 exports.createTour = factory.createOne(Tour);
 exports.updateTour = factory.updateOne(Tour);

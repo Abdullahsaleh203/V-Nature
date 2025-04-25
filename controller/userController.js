@@ -6,16 +6,15 @@ const asyncHandler = require('./../utils/asyncHandler');
 const appError = require('../utils/appError');
 
 
-const multerStorage = multer.memoryStorage();
 // const multerStorage = multer.diskStorage({
-//   destnation: (req, file, cb) => {
-//     cb(null, 'public/img/users')
-//   }, filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
-//   }
-// });
-
+  //   destnation: (req, file, cb) => {
+    //     cb(null, 'public/img/users')
+    //   }, filename: (req, file, cb) => {
+      //     const ext = file.mimetype.split('/')[1];
+      //     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
+      //   }
+      // });
+const multerStorage = multer.memoryStorage();
 const multerFilter = (req, file, cb) => {
   // 1) Check if the file is an image
   if (file.mimetype.startsWith('image')) {
@@ -35,7 +34,7 @@ exports.resizeUserPhoto = asyncHandler(async (req, res, next) => {
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
   if (!req.file) return next();
 
-  sharp(req.file.buffer)
+  await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
