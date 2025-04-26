@@ -1,10 +1,27 @@
 // Description: This file contains the code to send an email using nodemailer.
+const pug = require('pug');
 const nodemailer = require('nodemailer');
-
-const sendEmail = async options => {
-    try {
-        // 1) Create a transporter
-        const transporter = nodemailer.createTransport({
+const htmlToText = require('html-to-text');
+module.exports = class Email {
+    constructor(user, url) {
+        this.to = user.email;
+        this.firstname = user.name.split(' ')[0];
+        this.url = url;
+        this.from = `V-Natural <${process.env.EMAIL_FROM}>`;
+    }
+    newTransport() {
+        if (process.env.NODE_ENV === 'production') {
+            // Sendgrid
+            return ;
+            // return nodemailer.createTransport({
+            //     service: 'SendGrid',
+            //     auth: {
+            //         user: process.env.SENDGRID_USERNAME,
+            //         pass: process.env.SENDGRID_PASSWORD
+            //     }
+            // });
+        }
+        return nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
             port: process.env.EMAIL_PORT,
             auth: {
@@ -12,24 +29,30 @@ const sendEmail = async options => {
                 pass: process.env.EMAIL_PASSWORD
             }
         });
-
-            // 2) Define the email options
-            const mailOptions = {
-            from: process.env.EMAIL_USERNAME, // This is the email that will be shown as the sender
-            to: options.email,
-            subject: options.subject,
-            text: options.message
-        };
-
-// 3) Actually send the email
-        console.log('Send to:', options.email);
-
-        await transporter.sendMail(mailOptions);
-        console.log('Successfully sent email!');
-    } catch (error) {
-        console.error('Error sending email:', error);
-        throw new Error('Error sending email:', error);
     }
-};
-
-module.exports = sendEmail;
+    // Send the actual email
+    async send(template, subject) {
+        // 1) Render HTML based on a pug template
+        const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+            firstname: this.firstname,
+            url: this.url,
+            subject
+        });
+        // 2) define email options
+        const mailOptions = {
+            from: this.from, // This is the email that will be shown as the sender
+            to: this.to,
+            subject,
+            html,
+            text: htmlToText.convert(html)
+        };
+        await this.newTransport().sendMail(mailOptions)
+    }
+    // 3) Create a transport and send email
+    async sendWelcome() {
+        await this.send('welcome', 'Welcome to the V-Natural Family!');
+    }
+    async sendPasswordReset() {
+        await this.send('passwordReset', 'Your password reset token (valid for only 10 minutes)');
+    }
+}

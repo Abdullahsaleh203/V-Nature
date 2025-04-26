@@ -1,5 +1,5 @@
 const express = require('express');
-const tourRoute = require('../controller/tourController');
+const tourController = require('../controller/tourController');
 const authController = require('../controller/authController');
 const reviewController = require('./../controller/reviewController');
 const reviewRoter = require('./reviewRoute');
@@ -15,37 +15,37 @@ router.use('/:tourId/reviews', reviewRoter);
 // });
 
 router.route('/top-5-cheap')
-    .get(tourRoute.aliasTopTours, tourRoute.getAllTours);
+    .get(tourController.aliasTopTours, tourController.getAllTours);
 
 router.route('/tour-stats')
-    .get(tourRoute.getTourStats);
+    .get(tourController.getTourStats);
 router.route('/monthly-plan/:year')
     .get(authController.protect, 
         authController.restrictTo('admin', 'lead-guide','guide'),
-        tourRoute.getMonthPlan);
+        tourController.getMonthPlan);
 
-router.route('/tours-within/:distance/center/:latlng/unit/:unit').get(tourRoute.getTourWithin);        
-router.route('/distances/:latlng/unit/:unit').get(tourRoute.getDistances);
+router.route('/tours-within/:distance/center/:latlng/unit/:unit').get(tourController.getTourWithin);        
+router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
 
 router.route('/')
-    // .get(tourRoute.getAllTours)
-    .get(tourRoute.getAllTours)
+    // .get(tourController.getAllTours)
+    .get(tourController.getAllTours)
     .post(authController.protect, 
         authController.restrictTo('admin', 'lead-guide'),
-        tourRoute.createTour);
+        tourController.createTour);
 
 
 router.route('/:id')
-    .get(tourRoute.getTour)
+    .get(tourController.getTour)
     .post(authController.protect, 
         authController.restrictTo('admin', 'lead-guide'),
-        tourRoute.createTour)
+        tourController.createTour)
     .patch(authController.protect, 
-        authController.restrictTo('admin', 'lead-guide'),
-        tourRoute.updateTour)
+        authController.restrictTo('admin', 'lead-guide'), tourController.uploadToureImages,tourController.resizeTourImages,
+        tourController.updateTour)
     .delete(authController.protect, 
         authController.restrictTo('admin', 'lead-guide'),
-        tourRoute.deleteTour);
+        tourController.deleteTour);
 
 // reviews tour
 // Nested routes
