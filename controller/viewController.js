@@ -37,9 +37,16 @@ exports.getTour = asyncHandler(async (req, res, next) => {
 
 exports.getLoginForm = (req, res) => {
     res.status(200).render('login', {
-        title: 'Login'
+        title: 'Log into your account'
     });
 }
+
+exports.getSignupForm = (req, res) => {
+    res.status(200).render('signup', {
+        title: 'Create your account'
+    });
+}
+
 exports.getAccount = (req, res) => {
     res.status(200).render('account', {
         title: 'Your account'
@@ -64,3 +71,12 @@ exports.updateUserData = asyncHandler(async (req, res, next) => {
 //         title: 'signup'
 //     });
 // }
+
+// log out
+exports.logout = (req, res) => {
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    });
+    res.status(200).redirect('/');
+};

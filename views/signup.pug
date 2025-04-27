@@ -3,20 +3,25 @@ extends base
 block content
   main.main
     .login-form
-      h2.heading-secondary.ma-bt-lg Sign in to your account
-      form.form.form--login
+      h2.heading-secondary.ma-bt-lg Create your account
+      form.form.form--signup
+        .form__group
+          label.form__label(for='name') Full Name
+          input#name.form__input(type='text', placeholder='John Doe', required)
         .form__group
           label.form__label(for='email') Email address
           input#email.form__input(type='email', placeholder='you@example.com', required)
         .form__group.ma-bt-md
           label.form__label(for='password') Password
           input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+        .form__group.ma-bt-md
+          label.form__label(for='passwordConfirm') Confirm Password
+          input#passwordConfirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
         .form__group
-          button.btn.btn--green Sign in
+          button.btn.btn--green Sign up
         .form__group.center
-          p.form__text Don't have an account? 
-            a.form__link(href='/signup') Sign up here
-          a.form__link.small(href='#') Forgot your password?
+          p.form__text Already have an account? 
+            a.form__link(href='/signup') Sign in here
 
     style.
       .center {
@@ -34,11 +39,6 @@ block content
       }
       .form__link:hover {
         color: #28b487;
-      }
-      .form__link.small {
-        font-size: 1.2rem;
-        display: block;
-        margin-top: 1rem;
       }
       .login-form {
         margin-top: 5rem;
@@ -83,5 +83,4 @@ block content
         font-weight: 700;
         margin-bottom: 0.7rem;
         display: block;
-      }
-
+      } 

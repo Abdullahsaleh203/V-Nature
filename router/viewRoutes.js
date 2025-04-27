@@ -9,6 +9,8 @@ const router = express.Router();
 router.get('/', authController.isLoggedIn, viewController.getOverview);
 router.get('/tour/:slug', authController.isLoggedIn, viewController.getTour);
 router.get('/login', viewController.getLoginForm);
+router.get('/signup', viewController.getSignupForm);
+router.get('/logout', viewController.logout);
 router.get('/me', authController.protect, viewController.getAccount);
 // router.use(viewsController.alerts);
 
