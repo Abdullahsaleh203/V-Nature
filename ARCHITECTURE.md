@@ -23,52 +23,107 @@ The application is built with Node.js and Express.js, using MongoDB as the datab
 ## Architecture Diagram
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│                 │     │                 │     │                 │
-│  Client Browser │────▶│  Express Server │────▶│   MongoDB DB    │
-│                 │     │                 │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-        ▲                       │                       ▲
-        │                       │                       │
-        │                       ▼                       │
-        │               ┌─────────────────┐             │
-        │               │                 │             │
-        └───────────────│  Pug Templates  │             │
-                        │                 │             │
-                        └─────────────────┘             │
-                                ▲                       │
-                                │                       │
-                                ▼                       │
-                        ┌─────────────────┐             │
-                        │                 │             │
-                        │  Static Assets  │             │
-                        │                 │             │
-                        └─────────────────┘             │
-                                ▲                       │
-                                │                       │
-                                ▼                       │
-                        ┌─────────────────┐             │
-                        │                 │             │
-                        │  External APIs  │             │
-                        │                 │             │
-                        └─────────────────┘             │
-                                ▲                       │
-                                │                       │
-                                ▼                       │
-                        ┌─────────────────┐             │
-                        │                 │             │
-                        │  Email Service  │             │
-                        │                 │             │
-                        └─────────────────┘             │
-                                ▲                       │
-                                │                       │
-                                ▼                       │
-                        ┌─────────────────┐             │
-                        │                 │             │
-                        │  Payment Service│             │
-                        │                 │             │
-                        └─────────────────┘             │
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           Client Layer                                   │
+│                                                                         │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────┐  │
+│  │             │    │             │    │             │    │         │  │
+│  │  Web Browser│    │  Mobile App │    │  Desktop App│    │  API    │  │
+│  │             │    │             │    │             │    │  Client │  │
+│  └──────┬──────┘    └──────┬──────┘    └──────┬──────┘    └────┬────┘  │
+│         │                  │                   │                  │      │
+└─────────┼──────────────────┼───────────────────┼──────────────────┼──────┘
+          │                  │                   │                  │
+          ▼                  ▼                   ▼                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           Application Layer                              │
+│                                                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │                     Express.js Server                            │   │
+│  │                                                                 │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────┐│   │
+│  │  │             │  │             │  │             │  │         ││   │
+│  │  │  Middleware │  │   Routes    │  │ Controllers │  │  Utils  ││   │
+│  │  │             │  │             │  │             │  │         ││   │
+│  │  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘  └────┬────┘│   │
+│  │         │                 │                 │                 │   │
+│  │  ┌──────┴──────┐  ┌──────┴──────┐  ┌──────┴──────┐  ┌─────┴────┐│   │
+│  │  │             │  │             │  │             │  │           ││   │
+│  │  │  Security   │  │  API Routes │  │  Business   │  │  Helpers ││   │
+│  │  │  Middleware │  │  View Routes│  │  Logic      │  │  & Tools ││   │
+│  │  │             │  │             │  │             │  │           ││   │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘  └───────────┘│   │
+│  │                                                                 │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────┐│   │
+│  │  │             │  │             │  │             │  │         ││   │
+│  │  │  Pug        │  │  Static     │  │  Models     │  │  Email  ││   │
+│  │  │  Templates  │  │  Assets     │  │             │  │  Service││   │
+│  │  │             │  │             │  │             │  │         ││   │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘  └─────────┘│   │
+│  │                                                                 │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           Data Layer                                     │
+│                                                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │                     MongoDB Database                             │   │
+│  │                                                                 │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────┐│   │
+│  │  │             │  │             │  │             │  │         ││   │
+│  │  │  Users      │  │  Tours      │  │  Reviews    │  │ Bookings││   │
+│  │  │  Collection │  │  Collection │  │  Collection │  │ Collection│   │
+│  │  │             │  │             │  │             │  │         ││   │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘  └─────────┘│   │
+│  │                                                                 │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           External Services                              │
+│                                                                         │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐   │
+│  │             │  │             │  │             │  │             │   │
+│  │  Stripe     │  │  SendGrid   │  │  Cloudinary │  │  Mapbox     │   │
+│  │  Payment    │  │  Email      │  │  Image      │  │  Geocoding  │   │
+│  │  Processing │  │  Service    │  │  Storage    │  │  Service    │   │
+│  │             │  │             │  │             │  │             │   │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘   │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Component Interactions
+
+1. **Client Layer**:
+   - Users interact with the application through web browsers, mobile apps, desktop apps, or API clients.
+   - All client requests are sent to the Express.js server.
+
+2. **Application Layer**:
+   - **Express.js Server**: The core of the application that handles all incoming requests and outgoing responses.
+   - **Middleware**: Processes requests before they reach the routes, handling security, logging, and request parsing.
+   - **Routes**: Define the API endpoints and connect them to the appropriate controllers.
+   - **Controllers**: Contain the business logic and interact with the models.
+   - **Utils**: Provide utility functions used throughout the application.
+   - **Pug Templates**: Render HTML for the frontend.
+   - **Static Assets**: Serve CSS, JavaScript, and images.
+   - **Models**: Define the data structure and validation rules.
+   - **Email Service**: Handle sending emails for notifications and password resets.
+
+3. **Data Layer**:
+   - **MongoDB Database**: Stores all application data.
+   - **Collections**: Organize data into Users, Tours, Reviews, and Bookings.
+
+4. **External Services**:
+   - **Stripe**: Process payments for tour bookings.
+   - **SendGrid**: Send transactional emails.
+   - **Cloudinary**: Store and optimize tour and user images.
+   - **Mapbox**: Provide geocoding services for finding tours near a location.
 
 ## Technology Stack
 
