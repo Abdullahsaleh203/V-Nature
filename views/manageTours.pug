@@ -1,0 +1,33 @@
+extends base
+
+block content
+  main.main
+    .admin-container
+      h2.heading-secondary.ma-bt-lg Manage Tours
+      
+      .admin-actions
+        a.btn.btn--green(href='/create-tour') Create New Tour
+      
+      .admin-table-container
+        table.admin-table
+          thead
+            tr
+              th Tour Name
+              th Duration
+              th Price
+              th Difficulty
+              th Actions
+          tbody
+            each tour in tours
+              tr
+                td= tour.name
+                td= `${tour.duration} days`
+                td= `$${tour.price}`
+                td= tour.difficulty
+                td.admin-actions-cell
+                  a.btn.btn--small.btn--green(href=`/tour/${tour.slug}`) View
+                  a.btn.btn--small.btn--blue(href=`/edit-tour/${tour.id}`) Edit
+                  button.btn.btn--small.btn--red.delete-tour(data-tour-id=tour.id) Delete
+      
+      if tours.length === 0
+        p.no-tours No tours found. Create your first tour! 

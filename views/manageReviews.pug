@@ -1,0 +1,47 @@
+extends base
+
+block content
+  main.main
+    .review-manage
+      .review-manage__title
+        h2.heading-secondary.ma-bt-md Manage Reviews
+      .review-manage__content
+        if reviews && reviews.length > 0
+          table.review-manage__table
+            thead
+              tr
+                th Tour
+                th User
+                th Rating
+                th Review
+                th Created At
+                th Actions
+            tbody
+              each review in reviews
+                tr
+                  td
+                    if review.tour
+                      a(href=`/tour/${review.tour.slug}`)= review.tour.name
+                    else
+                      span Tour deleted
+                  td
+                    if review.user
+                      .review-manage__user
+                        img.review-manage__user-photo(src=`/img/users/${review.user.photo}`, alt=`${review.user.name}'s photo`)
+                        span= review.user.name
+                    else
+                      span User deleted
+                  td
+                    .review-manage__rating
+                      span= review.rating
+                      svg.review-manage__star
+                        use(xlink:href='/img/icons.svg#icon-star')
+                  td= review.review
+                  td= review.createdAt ? review.createdAt.toLocaleDateString() : 'N/A'
+                  td
+                    .review-manage__actions
+                      button.btn.btn--small.btn--green.btn--edit-review(data-review-id=`${review._id}`) Edit
+                      button.btn.btn--small.btn--red.btn--delete-review(data-review-id=`${review._id}`) Delete
+        else
+          .review-manage__empty
+            p No reviews found. 

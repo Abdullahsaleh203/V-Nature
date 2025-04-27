@@ -14,7 +14,7 @@ const reviewSchema = mongoose.Schema(
 			max: 5,
 			required: true
 		},
-		createAt: {
+		createdAt: {
 			type: Date,
 			default: Date.now()
 		},

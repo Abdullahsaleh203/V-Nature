@@ -1,0 +1,29 @@
+extends base
+
+block content
+  main.main
+    .user-manage
+      .user-manage__title
+        h2.heading-secondary.ma-bt-md Manage Users
+      .user-manage__content
+        table.user-manage__table
+          thead
+            tr
+              th Name
+              th Email
+              th Role
+              th Created At
+              th Actions
+          tbody
+            each user in users
+              tr
+                td= user.name
+                td= user.email
+                td= user.role
+                td= user.createdAt.toLocaleDateString()
+                td
+                  .user-manage__actions
+                    button.btn.btn--small.btn--green.btn--edit-user(data-user-id=`${user._id}`) Edit
+                    button.btn.btn--small.btn--red.btn--delete-user(data-user-id=`${user._id}`) Delete
+      .user-manage__actions
+        a.btn.btn--green(href='/create-user') Create New User 

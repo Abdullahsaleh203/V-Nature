@@ -30,6 +30,9 @@ block content
           svg.heading-box__icon
             use(xlink:href='/img/icons.svg#icon-map-pin')
           span.heading-box__text= tour.startLocation.description
+        if user && user.role === 'admin'
+          .heading-box__detail
+            a.btn.btn--small.btn--green(href='/manage-tours') Manage Tours
 
   section.section-description
     .overview-box
@@ -78,7 +81,7 @@ block content
   section.section-cta
     .cta
       .cta__img.cta__img--logo
-        img(src='/img/logo-white.png', alt='Natours logo')
+        img(src='/img/logo-white.png', alt='V-Natural logo')
       img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Tour picture')
       img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}`, alt='Tour picture')
       .cta__content

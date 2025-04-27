@@ -1,0 +1,47 @@
+extends base
+
+block content
+  main.main
+    .login-form
+      h2.heading-secondary.ma-bt-lg Create New Tour
+      form.form.form--create-tour
+        .form__group
+          label.form__label(for='name') Tour Name
+          input#name.form__input(type='text', placeholder='Tour name', required)
+        .form__group
+          label.form__label(for='duration') Duration (days)
+          input#duration.form__input(type='number', placeholder='Duration in days', required)
+        .form__group
+          label.form__label(for='maxGroupSize') Maximum Group Size
+          input#maxGroupSize.form__input(type='number', placeholder='Maximum group size', required)
+        .form__group
+          label.form__label(for='difficulty') Difficulty
+          select#difficulty.form__input(required)
+            option(value='easy') Easy
+            option(value='medium') Medium
+            option(value='difficult') Difficult
+        .form__group
+          label.form__label(for='price') Price
+          input#price.form__input(type='number', placeholder='Price per person', required)
+        .form__group
+          label.form__label(for='description') Description
+          textarea#description.form__input(rows='4', placeholder='Tour description', required)
+        .form__group
+          label.form__label(for='imageCover') Cover Image
+          input#imageCover.form__input(type='file', accept='image/*', required)
+        .form__group
+          label.form__label(for='images') Additional Images
+          input#images.form__input(type='file', accept='image/*', multiple)
+        .form__group
+          label.form__label(for='startLocation') Start Location
+          input#startLocation.form__input(type='text', placeholder='Start location', required)
+        .form__group
+          label.form__label(for='startDates') Start Dates
+          input#startDates.form__input(type='date', required)
+        .form__group
+          label.form__label(for='guides') Tour Guides
+          select#guides.form__input(multiple, required)
+            each guide in guides
+              option(value=guide._id)= guide.name
+        .form__group
+          button.btn.btn--green Create Tour 

@@ -1,0 +1,48 @@
+extends base
+
+block content
+  main.main
+    .booking-manage
+      .booking-manage__title
+        h2.heading-secondary.ma-bt-md Manage Bookings
+      .booking-manage__content
+        if bookings && bookings.length > 0
+          table.booking-manage__table
+            thead
+              tr
+                th Tour
+                th User
+                th Price
+                th Paid
+                th Created At
+                th Actions
+            tbody
+              each booking in bookings
+                tr
+                  td
+                    if booking.tour
+                      a(href=`/tour/${booking.tour.slug}`)= booking.tour.name
+                    else
+                      span Tour deleted
+                  td
+                    if booking.user
+                      span= booking.user.name
+                      br
+                      small= booking.user.email
+                    else
+                      span User deleted
+                  td
+                    span= `$${booking.price}`
+                  td
+                    if booking.paid
+                      span.booking-manage__status.booking-manage__status--paid Paid
+                    else
+                      span.booking-manage__status.booking-manage__status--unpaid Unpaid
+                  td= booking.createdAt.toLocaleDateString()
+                  td
+                    .booking-manage__actions
+                      button.btn.btn--small.btn--green.btn--edit-booking(data-booking-id=`${booking._id}`) Edit
+                      button.btn.btn--small.btn--red.btn--delete-booking(data-booking-id=`${booking._id}`) Delete
+        else
+          .booking-manage__empty
+            p No bookings found. 

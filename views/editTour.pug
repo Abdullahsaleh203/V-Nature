@@ -1,0 +1,53 @@
+extends base
+
+block content
+  main.main
+    .tour-form
+      .form__title
+        h2.heading-secondary.ma-bt-md Edit Tour: #{tour.name}
+      form.form.form--tour.form--edit-tour
+        .form__group
+          label.form__label(for='name') Tour name
+          input#name.form__input(type='text', value=`${tour.name}`, required, name='name')
+        .form__group.ma-bt-md
+          label.form__label(for='duration') Duration (days)
+          input#duration.form__input(type='number', value=`${tour.duration}`, required, name='duration')
+        .form__group.ma-bt-md
+          label.form__label(for='maxGroupSize') Max group size
+          input#maxGroupSize.form__input(type='number', value=`${tour.maxGroupSize}`, required, name='maxGroupSize')
+        .form__group.ma-bt-md
+          label.form__label(for='difficulty') Difficulty
+          select#difficulty.form__input(name='difficulty', required)
+            option(value='easy', selected=tour.difficulty === 'easy') Easy
+            option(value='medium', selected=tour.difficulty === 'medium') Medium
+            option(value='difficult', selected=tour.difficulty === 'difficult') Difficult
+        .form__group.ma-bt-md
+          label.form__label(for='price') Price
+          input#price.form__input(type='number', value=`${tour.price}`, required, name='price')
+        .form__group.ma-bt-md
+          label.form__label(for='summary') Summary
+          input#summary.form__input(type='text', value=`${tour.summary}`, required, name='summary')
+        .form__group.ma-bt-md
+          label.form__label(for='description') Description
+          textarea#description.form__input(name='description', required)= tour.description
+        .form__group.ma-bt-md
+          label.form__label(for='imageCover') Cover image
+          input#imageCover.form__input(type='text', value=`${tour.imageCover}`, required, name='imageCover')
+        .form__group.ma-bt-md
+          label.form__label(for='images') Images (comma separated)
+          input#images.form__input(type='text', value=`${tour.images.join(', ')}`, required, name='images')
+        .form__group.ma-bt-md
+          label.form__label(for='startLocation') Start location
+          input#startLocation.form__input(type='text', value=`${tour.startLocation.description}`, required, name='startLocation')
+        .form__group.ma-bt-md
+          label.form__label(for='startDates') Start dates (comma separated, format: YYYY-MM-DD)
+          input#startDates.form__input(type='text', value=`${tour.startDates.map(date => date.toISOString().split('T')[0]).join(', ')}`, required, name='startDates')
+        .form__group.ma-bt-md
+          label.form__label(for='guides') Guides (comma separated IDs)
+          input#guides.form__input(type='text', value=`${tour.guides.map(guide => guide._id).join(', ')}`, required, name='guides')
+        .form__group.ma-bt-md
+          label.form__label(for='locations') Locations (comma separated coordinates, format: lat,lng)
+          input#locations.form__input(type='text', value=`${tour.locations.map(loc => `${loc.coordinates[1]},${loc.coordinates[0]}`).join('; ')}`, required, name='locations')
+        .form__group.right
+          button.btn.btn--green.btn--save-tour(data-tour-id=`${tour.id}`) Update tour
+          a.btn.btn--small.btn--gray(href='/manage-tours') Cancel 

@@ -1,0 +1,51 @@
+extends base
+
+block content
+  main.main
+    .user-view
+      .user-view__content
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md My Bookings
+          
+          if bookings && bookings.length > 0
+            .card-container
+              each booking in bookings
+                .card
+                  .card__header
+                    .card__picture
+                      .card__picture-overlay &nbsp;
+                      img.card__picture-img(src=`/img/tours/${booking.tour.imageCover}`, alt=`${booking.tour.name}`)
+                    h3.heading-tertirary
+                      span= booking.tour.name
+                  .card__details
+                    h4.card__subheading= `$${booking.price}`
+                    p.card__text= booking.tour.summary
+                    .card__data
+                      svg.card__icon
+                        use(xlink:href='/img/icons.svg#icon-map-pin')
+                      span= booking.tour.startLocation.description
+                    .card__data
+                      svg.card__icon
+                        use(xlink:href='/img/icons.svg#icon-calendar')
+                      span= booking.createdAt.toLocaleDateString()
+                    .card__data
+                      svg.card__icon
+                        use(xlink:href='/img/icons.svg#icon-flag')
+                      if booking.paid
+                        span.card__status.card__status--paid Paid
+                      else
+                        span.card__status.card__status--unpaid Unpaid
+                  .card__footer
+                    p
+                      span.card__footer-value= `$${booking.price}`
+                      | 
+                      span.card__footer-text per person
+                    p.card__ratings
+                      span.card__footer-value= booking.tour.ratingsAverage
+                      | 
+                      span.card__footer-text rating (#{booking.tour.ratingsQuantity})
+                    a.btn.btn--green.btn--small(href=`/tour/${booking.tour.slug}`) View tour
+          else
+            .user-view__empty
+              p You haven't booked any tours yet.
+              a.btn.btn--green(href='/') Browse tours 
