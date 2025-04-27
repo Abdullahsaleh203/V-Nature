@@ -11,11 +11,11 @@ const cookieParser = require('cookie-parser');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorHandel');
-const tourRoute = require('./router/tourRoute');
-const userRouter = require('./router/userRoute');
-const reviewRouter = require('./router/reviewRoute');
-const viewRouter = require('./router/viewRoute');
-// const bookingRouter = require('./router/bookingRoutes');
+const tourRoute = require('./router/tourRoutes');
+const userRouter = require('./router/userRoutes');
+const reviewRouter = require('./router/reviewRoutes');
+const viewRouter = require('./router/viewRoutes');
+const bookingRouter = require('./router/bookingRoutes');
 const helmet = require('helmet');
 
 const app = express();
@@ -95,6 +95,7 @@ app.use('/', viewRouter)
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/booking', bookingRouter);
 
 // Middleware for unhandled routes
 app.all('*', (req, res, next) => {

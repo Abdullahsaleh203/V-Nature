@@ -1,6 +1,6 @@
 const express = require('express');
-const reviewController = require('./../controller/reviewController');
-const authController = require('./../controller/authController');
+const reviewController = require('../controller/reviewController');
+const authController = require('../controller/authController');
 
 // make sure to use the same router instance as the parent route
 // so that the mergeParams option works

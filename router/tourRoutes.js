@@ -1,8 +1,8 @@
 const express = require('express');
 const tourController = require('../controller/tourController');
 const authController = require('../controller/authController');
-const reviewController = require('./../controller/reviewController');
-const reviewRoter = require('./reviewRoute');
+const reviewController = require('../controller/reviewController');
+const reviewRoter = require('./reviewRoutes');
 const router = express.Router({mergeParams: true});
 
 
