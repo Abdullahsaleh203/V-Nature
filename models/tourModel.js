@@ -163,11 +163,11 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
-tourSchema.post(/^find/, function (doc,next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  // console.log(doc);
-  next();
-});
+// tourSchema.post(/^find/, function (doc,next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+//   // console.log(doc);
+//   next();
+// });
 
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } })
