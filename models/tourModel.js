@@ -154,15 +154,15 @@ tourSchema.pre('save', function (next) {
 // QUERY MIDDLEWARE
 
 // populate is used to get the data from the referenced model
-tourSchema.pre('find', function(next) {
+tourSchema.pre(/^find/, function(next) {
   this.populate({
-    // path is the name of the field in the model where the reference is stored
     path: 'guides',
-    // select is used to select the fields that we want to display in the output
-    select: '-__v -passwordChangedAt -createdAt -role'
-  })
+    select: '-__v -passwordChangedAt'
+  });
+
   next();
-})
+});
+
 tourSchema.post(/^find/, function (doc,next) {
   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
   // console.log(doc);
