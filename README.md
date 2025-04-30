@@ -43,7 +43,7 @@ A full-stack Node.js application for booking tours, built with Express, MongoDB,
 ## Project Structure
 
 ```
-node_bootcamp/
+V-Nature/
 ├── controller/         # Business logic
 ├── dev-data/           # Development data
 ├── models/             # Database models
@@ -60,9 +60,9 @@ node_bootcamp/
 
 1. Clone the repository:
    ```
-   git clone https://github.com/Abdullahsaleh203/node_bootcamp.git
+   git clone https://github.com/Abdullahsaleh203/V-Nature.git
 
-   cd node_bootcamp
+   cd V-Nature
    ```
 
 2. Install dependencies:
