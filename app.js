@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorHandel');
@@ -15,11 +16,11 @@ const tourRoute = require('./router/tourRoutes');
 const userRouter = require('./router/userRoutes');
 const reviewRouter = require('./router/reviewRoutes');
 const viewRouter = require('./router/viewRoutes');
-// const bookingRouter = require('./router/bookingRoutes');
+const bookingRouter = require('./router/bookingRoutes');
 const helmet = require('helmet');
 
 const app = express();
-// const bookingController = require('./controller/bookingController');
+const bookingController = require('./controller/bookingController');
 // const swaggerUi = require('swagger-ui-express');
 // Set view engine to pug
 app.set('view engine', 'pug');
@@ -29,26 +30,38 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 // Middleware
 
+// Enable CORS for all routes
+app.use(cors({
+  origin: true, // Allow all origins in development
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 // Set security HTTP headers
-// app.use(helmet());
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://js.stripe.com'],
-        connectSrc: ["'self'", 'ws://127.0.0.1:*', 'http://127.0.0.1:*'],
-        imgSrc: ["'self'", 'data:', 'https:'],
+        defaultSrc: ["'self'", 'http://127.0.0.1:*', 'http://localhost:*'],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://js.stripe.com', 'http://127.0.0.1:*', 'http://localhost:*'],
+        connectSrc: ["'self'", 'ws://localhost:*', 'http://localhost:*', 'ws://127.0.0.1:*', 'http://127.0.0.1:*', 'https://js.stripe.com'],
+        imgSrc: ["'self'", 'data:', 'https:', 'http:'],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: []
       },
     },
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginOpenerPolicy: false
   })
 );
 
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+  app.use(morgan('dev'));
 }
 
 // Body parser, reading data from body into req.body
@@ -95,7 +108,7 @@ app.use('/', viewRouter)
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
-// app.use('/api/v1/booking', bookingRouter);
+app.use('/api/v1/booking', bookingRouter);
 
 // Middleware for unhandled routes
 app.all('*', (req, res, next) => {
