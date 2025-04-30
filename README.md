@@ -1,4 +1,4 @@
-# V-Natural - Tour Booking Application
+# V-Nature - Tour Booking Application
 
 A full-stack Node.js application for booking tours, built with Express, MongoDB, and Pug templates.
 
@@ -43,7 +43,7 @@ A full-stack Node.js application for booking tours, built with Express, MongoDB,
 ## Project Structure
 
 ```
-node_bootcamp/
+V-Nature/
 ├── controller/         # Business logic
 ├── dev-data/           # Development data
 ├── models/             # Database models
@@ -60,9 +60,9 @@ node_bootcamp/
 
 1. Clone the repository:
    ```
-   git clone https://github.com/Abdullahsaleh203/node_bootcamp.git
+   git clone https://github.com/Abdullahsaleh203/V-Nature.git
 
-   cd node_bootcamp
+   cd V-Nature
    ```
 
 2. Install dependencies:
@@ -74,7 +74,7 @@ node_bootcamp/
    ```
    NODE_ENV=development
    PORT=3000
-   DATABASE_URI=mongodb://localhost:27017/V-Natural
+   DATABASE_URI=mongodb://localhost:27017/V-Nature
    JWT_SECRET_KEY=your-jwt-secret-key
    JWT_EXPIRES_IN=90d
    JWT_COOKIE_EXPIRES_IN=90
