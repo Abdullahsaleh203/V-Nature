@@ -1,4 +1,4 @@
-# V-Natural - Tour Booking Application
+# V-Nature - Tour Booking Application
 
 A full-stack Node.js application for booking tours, built with Express, MongoDB, and Pug templates.
 
@@ -74,7 +74,7 @@ node_bootcamp/
    ```
    NODE_ENV=development
    PORT=3000
-   DATABASE_URI=mongodb://localhost:27017/V-Natural
+   DATABASE_URI=mongodb://localhost:27017/V-Nature
    JWT_SECRET_KEY=your-jwt-secret-key
    JWT_EXPIRES_IN=90d
    JWT_COOKIE_EXPIRES_IN=90
