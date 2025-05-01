@@ -1,6 +1,6 @@
-# V-Natural API Documentation
+# V-Nature API Documentation
 
-This document provides detailed information about the V-Natural API endpoints, including request/response formats, authentication, and examples.
+This document provides detailed information about the V-Nature API endpoints, including request/response formats, authentication, and examples.
 
 ## Table of Contents
 

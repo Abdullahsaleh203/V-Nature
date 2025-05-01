@@ -1,6 +1,6 @@
-# V-Natural User Guide
+# V-Nature User Guide
 
-This guide provides instructions on how to use the V-Natural application for booking tours.
+This guide provides instructions on how to use the V-Nature application for booking tours.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ This guide provides instructions on how to use the V-Natural application for boo
 
 ### Accessing the Application
 
-1. Open your web browser and navigate to the V-Natural website.
+1. Open your web browser and navigate to the V-Nature website.
 2. The homepage will display an overview of available tours.
 
 ### Creating an Account
@@ -296,8 +296,8 @@ Admin features are only available to users with admin privileges. If you have ad
 
 ### Contacting Support
 
-If you encounter any issues not covered in this guide, please contact the V-Natural support team:
+If you encounter any issues not covered in this guide, please contact the V-Nature support team:
 
-- Email: support@V-Natural.com
+- Email: support@V-Nature.com
 - Phone: +20 
 - Hours: Monday to Friday, 9:00 AM to 5:00 PM EST 
