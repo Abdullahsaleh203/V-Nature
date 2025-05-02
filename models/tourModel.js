@@ -49,7 +49,7 @@ const tourSchema = new mongoose.Schema(
     priceDiscount: {
       type: Number,
       validate: {
-        validator: function(val) {
+        validator: function (val) {
           // this only points to current doc on NEW document creation
           return val < this.price;
         },
@@ -108,10 +108,10 @@ const tourSchema = new mongoose.Schema(
     //guides: embedded documents
     // guides:Array
     // guides:  references
-    guides : [
-      { 
-      type: mongoose.Schema.ObjectId,
-      ref:'User'
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
       }
     ]
   }, {
@@ -154,7 +154,7 @@ tourSchema.pre('save', function (next) {
 // QUERY MIDDLEWARE
 
 // populate is used to get the data from the referenced model
-tourSchema.pre(/^find/, function(next) {
+tourSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'guides',
     select: '-__v -passwordChangedAt'

@@ -23,7 +23,7 @@ const fs = require('fs');
 
 
 
-// const write = fs.writeFile('data2.txt', data , 'utf8', (err) => { 
+// const write = fs.writeFile('data2.txt', data , 'utf8', (err) => {
 //     if (err) {
 //         console.error(err);
 //         return;

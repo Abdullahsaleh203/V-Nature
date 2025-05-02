@@ -180,7 +180,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   const resetToken = user.createPasswordResetToken();
 
   await user.save({ validateBeforeSave: false });
-  
+
   try {
     // 3) Send it to user's email
     const resetURL = `${req.protocol}://${req.get(

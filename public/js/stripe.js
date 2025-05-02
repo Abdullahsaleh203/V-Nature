@@ -5,7 +5,7 @@ import { showAlert } from './alerts';
 // Wait for Stripe to be loaded
 let stripe;
 window.addEventListener('load', () => {
-  stripe = Stripe('pk_test_BUkd0ZXAj6m0q0jMyRgBxNns00PPtgvjjr');
+  stripe = Stripe('pk_test_51RICbiGbRQkIQI2WsnOt4fha92obqfHLjDeP3DaV0wwYD1gvvxt0Ha0ryribOnhpz0qZln9UxCbAZlGn9nQAKjRP00BrJ5ucWX');
 });
 
 export const bookTour = async tourId => {

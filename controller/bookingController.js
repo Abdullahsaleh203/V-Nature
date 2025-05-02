@@ -1,3 +1,4 @@
+/* eslint-disable */
 const asyncHandler = require('../utils/asyncHandler');
 const Tour = require('../models/tourModel');
 const Booking = require('../models/bookingModel');

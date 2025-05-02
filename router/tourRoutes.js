@@ -3,7 +3,7 @@ const tourController = require('../controller/tourController');
 const authController = require('../controller/authController');
 const reviewController = require('../controller/reviewController');
 const reviewRoter = require('./reviewRoutes');
-const router = express.Router({mergeParams: true});
+const router = express.Router({ mergeParams: true });
 
 
 // nested routes: tour/:tourId/reviews
@@ -20,30 +20,30 @@ router.route('/top-5-cheap')
 router.route('/tour-stats')
     .get(tourController.getTourStats);
 router.route('/monthly-plan/:year')
-    .get(authController.protect, 
-        authController.restrictTo('admin', 'lead-guide','guide'),
+    .get(authController.protect,
+        authController.restrictTo('admin', 'lead-guide', 'guide'),
         tourController.getMonthPlan);
 
-router.route('/tours-within/:distance/center/:latlng/unit/:unit').get(tourController.getTourWithin);        
+router.route('/tours-within/:distance/center/:latlng/unit/:unit').get(tourController.getTourWithin);
 router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
 
 router.route('/')
     // .get(tourController.getAllTours)
     .get(tourController.getAllTours)
-    .post(authController.protect, 
+    .post(authController.protect,
         authController.restrictTo('admin', 'lead-guide'),
         tourController.createTour);
 
 
 router.route('/:id')
     .get(tourController.getTour)
-    .post(authController.protect, 
+    .post(authController.protect,
         authController.restrictTo('admin', 'lead-guide'),
         tourController.createTour)
-    .patch(authController.protect, 
-        authController.restrictTo('admin', 'lead-guide'), tourController.uploadToureImages,tourController.resizeTourImages,
+    .patch(authController.protect,
+        authController.restrictTo('admin', 'lead-guide'), tourController.uploadToureImages, tourController.resizeTourImages,
         tourController.updateTour)
-    .delete(authController.protect, 
+    .delete(authController.protect,
         authController.restrictTo('admin', 'lead-guide'),
         tourController.deleteTour);
 

@@ -18,7 +18,7 @@ const reviewRouter = require('./router/reviewRoutes');
 const viewRouter = require('./router/viewRoutes');
 const bookingRouter = require('./router/bookingRoutes');
 const helmet = require('helmet');
-
+const compression = require('compression');
 const app = express();
 const bookingController = require('./controller/bookingController');
 // const swaggerUi = require('swagger-ui-express');
@@ -84,7 +84,7 @@ app.use(hpp({
     'price'
   ]
 }));
-
+app.use(compression());
 // app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Limit request from same API

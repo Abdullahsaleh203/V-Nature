@@ -6,7 +6,7 @@ const Review = require('../models/reviewModel');
 const Booking = require('../models/bookingModel');
 
 exports.getOverview = asyncHandler(async (req, res, next) => {
-// 1) Get tour data from collection
+    // 1) Get tour data from collection
     const tours = await Tour.find();
     // 2) Build template
     // 3) Render that template using tour data from 1)
@@ -52,13 +52,47 @@ exports.getSignupForm = (req, res) => {
 exports.getAccount = (req, res) => {
     res.status(200).render('account', {
         title: 'Your account'
-  });
+    });
 }
 
+
+
+exports.getMyTours = asyncHandler(async (req, res, next) => {
+    // 1) Find all bookings
+    const bookings = await Booking.find({ user: req.user.id });
+
+    // 2) Find tours with the returned IDs
+    const tourIDs = bookings.map(el => el.tour);
+    const tours = await Tour.find({ _id: { $in: tourIDs } });
+
+    res.status(200).render('overview', {
+        title: 'My Tours',
+        tours
+    });
+});
+
+// exports.updateUserData = catchAsync(async (req, res, next) => {
+//     const updatedUser = await User.findByIdAndUpdate(
+//         req.user.id,
+//         {
+//             name: req.body.name,
+//             email: req.body.email
+//         },
+//         {
+//             new: true,
+//             runValidators: true
+//         }
+//     );
+
+//     res.status(200).render('account', {
+//         title: 'Your account',
+//         user: updatedUser
+//     });
+// });
 exports.getCreateTourForm = asyncHandler(async (req, res, next) => {
     // Get all guides for the tour
     const guides = await User.find({ role: { $in: ['guide', 'lead-guide'] } });
-    
+
     res.status(200).render('createTour', {
         title: 'Create New Tour',
         guides
@@ -68,7 +102,7 @@ exports.getCreateTourForm = asyncHandler(async (req, res, next) => {
 exports.getManageTours = asyncHandler(async (req, res, next) => {
     // Get all tours
     const tours = await Tour.find().sort('-createdAt');
-    
+
     res.status(200).render('manageTours', {
         title: 'Manage Tours',
         tours
@@ -78,7 +112,7 @@ exports.getManageTours = asyncHandler(async (req, res, next) => {
 exports.getManageUsers = asyncHandler(async (req, res, next) => {
     // Get all users
     const users = await User.find().sort('-createdAt');
-    
+
     res.status(200).render('manageUsers', {
         title: 'Manage Users',
         users
@@ -97,7 +131,7 @@ exports.getManageReviews = asyncHandler(async (req, res, next) => {
             select: 'name photo'
         })
         .sort('-createdAt');
-    
+
     res.status(200).render('manageReviews', {
         title: 'Manage Reviews',
         reviews
@@ -116,7 +150,7 @@ exports.getManageBookings = asyncHandler(async (req, res, next) => {
             select: 'name email'
         })
         .sort('-createdAt');
-    
+
     res.status(200).render('manageBookings', {
         title: 'Manage Bookings',
         bookings
@@ -131,7 +165,7 @@ exports.getMyBookings = asyncHandler(async (req, res, next) => {
             select: 'name price imageCover'
         })
         .sort('-createdAt');
-    
+
     res.status(200).render('myBookings', {
         title: 'My Bookings',
         bookings
@@ -142,11 +176,11 @@ exports.getEditTourForm = asyncHandler(async (req, res, next) => {
     // Get the tour and guides
     const tour = await Tour.findById(req.params.id);
     const guides = await User.find({ role: { $in: ['guide', 'lead-guide'] } });
-    
+
     if (!tour) {
         return next(new AppError('No tour found with that ID', 404));
     }
-    
+
     res.status(200).render('editTour', {
         title: 'Edit Tour',
         tour,
@@ -165,8 +199,8 @@ exports.updateUserData = asyncHandler(async (req, res, next) => {
 
     res.status(200).render('account', {
         title: 'Your account',
-    user: updatedUser
-  });
+        user: updatedUser
+    });
 });
 // exports.getSingUpForm = (req, res) => {
 //     res.status(200).render('signup', {
