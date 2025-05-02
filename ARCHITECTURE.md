@@ -1,6 +1,6 @@
-# V-Natural Technical Architecture
+# V-Nature Technical Architecture
 
-This document provides a detailed overview of the V-Natural application architecture, including the system components, their interactions, and design decisions.
+This document provides a detailed overview of the V-Nature application architecture, including the system components, their interactions, and design decisions.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ This document provides a detailed overview of the V-Natural application architec
 
 ## System Overview
 
-V-Natural is a full-stack web application for booking tours. It follows a traditional MVC (Model-View-Controller) architecture with a RESTful API backend and a server-rendered frontend using Pug templates.
+V-Nature is a full-stack web application for booking tours. It follows a traditional MVC (Model-View-Controller) architecture with a RESTful API backend and a server-rendered frontend using Pug templates.
 
 The application is built with Node.js and Express.js, using MongoDB as the database. It implements various security features, including JWT authentication, data sanitization, and rate limiting.
 
