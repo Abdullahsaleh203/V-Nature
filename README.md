@@ -4,16 +4,27 @@ A full-stack Node.js application for booking tours, built with Express, MongoDB,
 
 ## Table of Contents
 
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Security Features](#security-features)
-- [Development](#development)
-- [License](#license)
+- [V-Nature - Tour Booking Application](#v-nature---tour-booking-application)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+  - [Project Structure](#project-structure)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Usage](#usage)
+    - [Development Mode](#development-mode)
+    - [Production Mode](#production-mode)
+    - [Building Frontend Assets](#building-frontend-assets)
+  - [API Documentation](#api-documentation)
+    - [Tours](#tours)
+    - [Users](#users)
+    - [Reviews](#reviews)
+    - [Bookings](#bookings)
+  - [Security Features](#security-features)
+  - [Development](#development)
+    - [Code Style](#code-style)
+    - [Debugging](#debugging)
+  - [License](#license)
 
 ## Features
 
@@ -64,6 +75,7 @@ V-Nature/
 
    cd V-Nature
    ```
+
 
 2. Install dependencies:
    ```
