@@ -1,19 +1,19 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",        
-  "version": 2,                                                
-  "buildCommand": "npm run build",                             // الأمر الذي تريد تشغيله قبل النشر :contentReference[oaicite:5]{index=5}
-  "devCommand": "npm run dev",                                 // الأمر للتطوير المحلّي :contentReference[oaicite:6]{index=6}
-  "framework": null,                                           // "Other" بدلاً من إطار محدد
-  "builds": [                                                  // تعريف الدوال Serverless
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "framework": null,
+  "builds": [
     {
       "src": "server.js",
       "use": "@vercel/node"
     }
   ],
-  "routes": [                                                  // إعادة توجيه جميع المسارات إلى API
-    { "src": "/(.*)", "dest": "/" }
-  ],
-  "env": {                                                     // متغيرات البيئة
-    "MONGODB_URI": "@mongodb-uri"
-  }
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ]
 }
