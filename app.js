@@ -40,24 +40,26 @@ app.use(cors({
 
 // Set security HTTP headers
 app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'", 'http://127.0.0.1:*', 'http://localhost:*'],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://js.stripe.com', 'http://127.0.0.1:*', 'http://localhost:*'],
-        connectSrc: ["'self'", 'ws://localhost:*', 'http://localhost:*', 'ws://127.0.0.1:*', 'http://127.0.0.1:*', 'https://js.stripe.com'],
-        imgSrc: ["'self'", 'data:', 'https:', 'http:'],
-        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
-        objectSrc: ["'none'"],
-        upgradeInsecureRequests: []
-      },
-    },
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: "cross-origin" },
-    crossOriginOpenerPolicy: false
-  })
+  helmet(
+    // {
+    // contentSecurityPolicy: {
+      // directives: {
+        // defaultSrc: ["'self'", 'http://127.0.0.1:*', 'http://localhost:*'],
+        // scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://js.stripe.com', 'http://127.0.0.1:*', 'http://localhost:*'],
+        // connectSrc: ["'self'", 'ws://localhost:*', 'http://localhost:*', 'ws://127.0.0.1:*', 'http://127.0.0.1:*', 'https://js.stripe.com'],
+        // imgSrc: ["'self'", 'data:', 'https:', 'http:'],
+        // styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        // fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        // frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
+        // objectSrc: ["'none'"],
+        // upgradeInsecureRequests: []
+      // },
+    // },
+    // crossOriginEmbedderPolicy: false,
+    // crossOriginResourcePolicy: { policy: "cross-origin" },
+    // crossOriginOpenerPolicy: false
+    // }
+  )
 );
 
 if (process.env.NODE_ENV === 'development') {

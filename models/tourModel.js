@@ -169,12 +169,12 @@ tourSchema.pre(/^find/, function (next) {
 //   next();
 // });
 
-tourSchema.pre(/^find/, function (next) {
-  this.find({ secretTour: { $ne: true } })
-  this.start = Date.now();
-  next();
-});
-
+// tourSchema.pre(/^find/, function (next) {
+  // this.find({ secretTour: { $ne: true } })
+  // this.start = Date.now();
+  // next();
+// });
+// 
 
 // AGGREGATION MIDDLEWARE
 // tourSchema.pre('aggregate', function (next) {
