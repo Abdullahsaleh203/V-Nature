@@ -1,0 +1,458 @@
+/* RESPONSIVE DESIGN STYLES */
+
+/* Root variables for viewport adjustments */
+:root {
+  --body-padding-mobile: 1rem;
+  --body-padding-tablet: 2rem;
+}
+
+/* Base responsive styles */
+html {
+  /* Base font size - will be adjusted in media queries */
+  font-size: 62.5%;
+}
+
+/* Mobile Menu Styles */
+.mobile-nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-toggle span:nth-child(1) {
+  top: 0.5rem;
+}
+
+.mobile-nav-toggle span:nth-child(2) {
+  top: 1.5rem;
+}
+
+.mobile-nav-toggle span:nth-child(3) {
+  top: 2.5rem;
+}
+
+.mobile-nav-toggle.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 1.5rem;
+}
+
+.mobile-nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 1.5rem;
+}
+
+/* Extra Large Desktop (>1200px) */
+@media only screen and (max-width: 75em) {
+  html {
+    font-size: 56.25%; /* 9px */
+  }
+
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Large Desktop (992px - 1200px) */
+@media only screen and (max-width: 62.5em) {
+  html {
+    font-size: 50%; /* 8px */
+  }
+
+  body {
+    padding: 2rem;
+  }
+
+  .main {
+    padding: 6rem 4rem;
+  }
+
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 2rem 3rem;
+  }
+
+  .header__logo {
+    margin-bottom: 1.5rem;
+  }
+
+  .heading-box {
+    bottom: 10vw;
+  }
+}
+
+/* Tablet (768px - 991px) */
+@media only screen and (max-width: 61em) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 4rem;
+  }
+
+  .section-description {
+    flex-direction: column;
+  }
+
+  .section-description > * {
+    padding: 5vw 8vw;
+    flex: 0 0 100%;
+  }
+
+  .cta {
+    padding: 9rem 4rem 9rem 15rem;
+  }
+
+  .user-view {
+    flex-direction: column;
+  }
+
+  .user-view__menu {
+    flex: 0 0 auto;
+    padding: 2rem 0;
+  }
+
+  .user-view__content {
+    padding: 4rem 0;
+  }
+
+  .side-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .side-nav li {
+    margin: 0.5rem;
+    border-left: none;
+    border-bottom: 0 solid #fff;
+  }
+
+  .side-nav--active, 
+  .side-nav li:hover {
+    border-left: none !important;
+    border-bottom: 4px solid #fff !important;
+  }
+
+  .side-nav a:link,
+  .side-nav a:visited {
+    padding: 1rem 2rem;
+  }
+
+  .admin-nav {
+    margin-top: 3rem;
+  }
+
+  .admin-nav__heading {
+    text-align: center;
+    margin: 0 auto 1.5rem;
+    max-width: 80%;
+  }
+}
+
+/* Mobile Menu Display */
+@media only screen and (max-width: 48em) {
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+  
+  .header {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: rgba(68, 68, 68, 0.97);
+    z-index: 1000;
+    padding: 8rem 2rem 2rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+  }
+  
+  .mobile-nav-active .nav {
+    right: 0;
+  }
+  
+  .mobile-nav-active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+}
+
+/* Mobile (576px - 767px) */
+@media only screen and (max-width: 48em) {
+  html {
+    font-size: 43.75%; /* 7px */
+  }
+
+  body {
+    padding: var(--body-padding-mobile);
+  }
+
+  .main {
+    padding: 4rem 2rem;
+  }
+
+  .card-container {
+    grid-template-columns: 1fr;
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+
+  .heading-primary {
+    font-size: 3.5rem;
+    width: 100%;
+  }
+
+  .heading-secondary {
+    font-size: 1.8rem;
+  }
+
+  .header__hero-img {
+    object-position: 50% 30%;
+  }
+
+  .section-pictures {
+    flex-direction: column;
+  }
+
+  .picture-box__img {
+    height: 20rem;
+  }
+
+  .picture-box__img--1,
+  .picture-box__img--2,
+  .picture-box__img--3 {
+    padding: 0;
+    margin: 1rem 0;
+  }
+
+  .section-reviews {
+    padding: calc(3rem + var(--section-rotate)) 0;
+  }
+
+  .reviews {
+    padding: 2rem 0;
+  }
+
+  .reviews__card {
+    width: 25rem;
+    padding: 2rem;
+  }
+
+  .cta {
+    padding: 6rem 3rem 6rem 3rem;
+    text-align: center;
+  }
+
+  .cta__img {
+    position: relative;
+    height: 12rem;
+    width: 12rem;
+    margin: -8rem auto 2rem;
+    right: 0;
+    top: 0;
+    transform: none;
+  }
+
+  .cta__img--logo {
+    transform: none;
+    margin-top: -7rem;
+  }
+
+  .cta__img--1, 
+  .cta__img--2 {
+    display: none;
+  }
+
+  .cta__content {
+    grid-template-columns: 1fr;
+    grid-gap: 1.5rem;
+    justify-items: center;
+  }
+  
+  .footer {
+    grid-template-columns: 1fr;
+    grid-row-gap: 1.5rem;
+    justify-items: center;
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+  }
+
+  .footer__logo {
+    grid-row: 1;
+    margin-bottom: 1rem;
+  }
+
+  .footer__nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer__nav li {
+    margin: 0.5rem 1rem;
+  }
+
+  /* Navigation on Mobile */
+  .nav {
+    flex-direction: column;
+  }
+
+  .nav--tours,
+  .nav--user {
+    margin-bottom: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav__el:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 0.8rem;
+  }
+
+  .nav__search {
+    order: -1;
+    margin-bottom: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav__search-input {
+    width: 80%;
+  }
+
+  .nav__search-input:focus {
+    width: 90%;
+  }
+
+  .user-view__form-container {
+    padding: 0 2rem;
+  }
+}
+
+/* Small mobile (< 576px) */
+@media only screen and (max-width: 36em) {
+  html {
+    font-size: 37.5%; /* 6px */
+  }
+
+  .heading-box {
+    top: 40%;
+  }
+
+  .heading-box__detail {
+    font-size: 1.3rem;
+  }
+
+  .heading-box__detail:not(:last-child) {
+    margin-right: 2rem;
+  }
+
+  .login-form {
+    padding: 3rem 2rem;
+    max-width: 35rem;
+  }
+
+  .form__input {
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* Specific fixes for elements */
+
+/* Fix for alerts */
+@media only screen and (max-width: 48em) {
+  .alert {
+    padding: 1.6rem 3rem;
+    width: 80%;
+    max-width: 30rem;
+  }
+}
+
+/* Fix for map view */
+@media only screen and (max-width: 61em) {
+  .section-map {
+    height: 45rem;
+  }
+}
+
+/* Fix for review cards */
+@media only screen and (max-width: 36em) {
+  .reviews {
+    padding: 1rem 0;
+  }
+
+  .reviews__card {
+    width: 20rem;
+    padding: 1.5rem;
+  }
+
+  .reviews__text {
+    font-size: 1.3rem;
+  }
+}
+
+/* Fix for viewport height issues on mobile */
+@media only screen and (max-width: 48em) {
+  .section-map,
+  .section-pictures,
+  .section-reviews {
+    margin-top: -2rem;
+  }
+
+  .section-cta {
+    padding-top: calc(7rem + var(--section-rotate));
+    padding-bottom: 7rem;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+  }
+
+  .btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-text:hover {
+    transform: none;
+    background-color: inherit;
+    color: inherit;
+    box-shadow: none;
+  }
+}
