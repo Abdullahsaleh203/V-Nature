@@ -1,24 +1,24 @@
 :root {
   --section-rotate: 9vw;
-  
+
   /* Modern color palette like Viator */
   --color-primary: #2c3e50;
   --color-primary-light: #34495e;
   --color-primary-dark: #1a252f;
-  
+
   --color-secondary: #3498db;
   --color-secondary-light: #5dade2;
   --color-secondary-dark: #2980b9;
-  
+
   --color-tertiary: #e67e22;
   --color-tertiary-light: #f39c12;
   --color-tertiary-dark: #d35400;
-  
+
   --color-grey-light-1: #f7f7f7;
   --color-grey-light-2: #eee;
   --color-grey-dark-1: #777;
   --color-grey-dark-2: #333;
-  
+
   --color-white: #fff;
   --color-black: #000;
 
@@ -1887,11 +1887,13 @@ body {
   padding: 2rem 0;
   -ms-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* For Firefox */
+  scrollbar-width: none;
+  /* For Firefox */
 }
 
 .testimonials-slider::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari and Opera */
+  display: none;
+  /* For Chrome, Safari and Opera */
 }
 
 .testimonial {
