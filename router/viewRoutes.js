@@ -16,6 +16,10 @@ router.get('/tour/:slug', authController.isLoggedIn, viewController.getTour);
 router.get('/login', authController.isLoggedIn, viewController.getLoginForm);
 router.get('/signup', authController.isLoggedIn, viewController.getSignupForm);
 router.get('/forgot-password', authController.isLoggedIn, viewController.getForgotPasswordForm);
+// Add case-insensitive route for forgot-password (handles /forgot-Password)
+router.get('/forgot-[pP]assword', (req, res) => {
+    res.redirect('/forgot-password');
+});
 router.get('/reset-password/:token', authController.isLoggedIn, viewController.getResetPasswordForm);
 router.get('/logout', viewController.logout);
 router.get('/me', authController.protect, viewController.getAccount);
