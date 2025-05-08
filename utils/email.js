@@ -10,7 +10,7 @@ module.exports = class Email {
         this.url = url;
         this.from = `V-Natural <${process.env.EMAIL_FROM}>`;
     }
-    
+
     newTransport() {
         if (process.env.NODE_ENV === 'production') {
             // Sendgrid
@@ -22,7 +22,7 @@ module.exports = class Email {
                 }
             });
         }
-        
+
         // Use mailtrap or other development email service
         return nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
@@ -33,7 +33,7 @@ module.exports = class Email {
             }
         });
     }
-    
+
     // Send the actual email
     async send(template, subject) {
         // 1) Render HTML based on a pug template
@@ -42,7 +42,7 @@ module.exports = class Email {
             url: this.url,
             subject
         });
-        
+
         // 2) define email options
         const mailOptions = {
             from: this.from, // This is the email that will be shown as the sender
@@ -51,15 +51,15 @@ module.exports = class Email {
             html,
             text: htmlToText.convert(html)
         };
-        
+
         // 3) Create a transport and send email
         await this.newTransport().sendMail(mailOptions);
     }
-    
+
     async sendWelcome() {
         await this.send('welcome', 'Welcome to the V-Natural Family!');
     }
-    
+
     async sendPasswordReset() {
         await this.send('passwordReset', 'Your password reset token (valid for only 10 minutes)');
     }
