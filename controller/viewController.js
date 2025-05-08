@@ -55,7 +55,11 @@ exports.getAccount = (req, res) => {
     });
 }
 
-
+exports.getForgotPasswordForm = (req, res) => {
+    res.status(200).render('forgotPassword', {
+        title: 'Forgot Password'
+    });
+};
 
 exports.getMyTours = asyncHandler(async (req, res, next) => {
     // 1) Find all bookings
