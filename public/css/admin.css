@@ -70,4 +70,109 @@
   font-size: 1.6rem;
   color: #666;
   margin-top: 3rem;
-} 
+}
+
+/* Review Management Styles */
+.review-manage {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
+}
+
+.review-manage__title {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.review-manage__content {
+  overflow-x: auto;
+}
+
+.review-manage__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+}
+
+.review-manage__table th {
+  background-color: #55c57a;
+  color: #fff;
+  font-weight: 600;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.review-manage__table td {
+  padding: 1.5rem;
+  border-bottom: 1px solid #f2f2f2;
+  vertical-align: middle;
+}
+
+.review-manage__table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.review-manage__user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.review-manage__user-photo {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review-manage__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-manage__star {
+  height: 1.5rem;
+  width: 1.5rem;
+  fill: #f7d068;
+}
+
+.review-manage__actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.review-manage__actions .btn--green {
+  background-color: #55c57a;
+}
+
+.review-manage__actions .btn--green:hover {
+  background-color: #4bb36e;
+}
+
+.review-manage__empty {
+  text-align: center;
+  padding: 3rem;
+  color: #777;
+  font-size: 1.6rem;
+}
+
+/* Add a create review button */
+.review-manage__create {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Make the review content column not too wide */
+.review-manage__table td:nth-child(4) {
+  max-width: 30rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
