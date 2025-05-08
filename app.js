@@ -9,6 +9,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const passport = require('passport');
+const session = require('express-session');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorHandel');
@@ -21,6 +23,8 @@ const helmet = require('helmet');
 const compression = require('compression');
 const app = express();
 const bookingController = require('./controller/bookingController');
+// Import passport config
+require('./utils/passport');
 
 // PERFORMANCE OPTIMIZATIONS
 // Apply compression for all responses
@@ -131,6 +135,22 @@ const limiter = rateLimit({
   message: 'Too many request from this IP, please try again in an hour'
 });
 app.use('/api', limiter);
+
+// Initialize session for Passport
+app.use(session({
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+  }
+}));
+
+// Initialize Passport and use session for persistent login
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Add request time to request object
 app.use((req, res, next) => {

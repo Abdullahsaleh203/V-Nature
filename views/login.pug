@@ -1,87 +1,345 @@
 extends base
 
 block content
-  main.main
-    .login-form
-      h2.heading-secondary.ma-bt-lg Sign in to your account
-      form.form
-        .form__group
-          label.form__label(for='email') Email address
-          input#email.form__input(type='email', placeholder='you@example.com', required)
-        .form__group.ma-bt-md
-          label.form__label(for='password') Password
-          input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
-        .form__group
-          button.btn.btn--green Sign in
-        .form__group.center
-          p.form__text Don't have an account? 
-            a.form__link(href='/signup') Sign up here
-          a.form__link.small(href='/forgot-password') Forgot your password?
+  main.auth-main
+    .auth-container
+      .auth-form-container
+        .auth-header
+          h2.auth-title Sign in to your account
+          p.auth-subtitle Welcome back! Please enter your details to continue
 
-    style.
-      .center {
-        text-align: center;
-        margin-top: 2rem;
-      }
-      .form__text {
-        color: #777;
-        font-size: 1.4rem;
-      }
-      .form__link {
-        color: #55c57a;
-        text-decoration: none;
-        transition: all 0.2s;
-      }
-      .form__link:hover {
-        color: #28b487;
-      }
-      .form__link.small {
-        font-size: 1.2rem;
+        form.auth-form
+          .form__group
+            label.form__label(for='email') Email address
+            .input-container
+              i.input-icon ✉
+              input#email.form__input(type='email', placeholder='you@example.com', required)
+          
+          .form__group
+            label.form__label(for='password') Password
+            .input-container
+              i.input-icon 🔒
+              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+          
+          .form__options
+            .remember-me
+              input#remember.remember-checkbox(type='checkbox')
+              label.remember-label(for='remember') Remember me
+            a.forgot-link(href='/forgot-password') Forgot password?
+          
+          .form__group
+            button.btn.btn--auth Sign in
+          
+          .auth-divider
+            span or
+          
+          .social-login
+            button.btn.btn--social.btn--google
+              span.social-icon G
+              span Continue with Google
+            
+            button.btn.btn--social.btn--facebook
+              span.social-icon f
+              span Continue with Facebook
+          
+          .auth-footer
+            p Don't have an account? 
+              a.auth-link(href='/signup') Sign up
+
+      .auth-image
+        img(src='/img/tours/tour-1-cover.jpg', alt='Beautiful Tour Image')
+        .auth-image-overlay
+        .auth-image-content
+          h3.auth-image-title Discover Extraordinary Places
+          p.auth-image-text Join thousands of travelers exploring the world's most beautiful destinations
+
+  style.
+    .auth-main {
+      min-height: calc(100vh - 8rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-grey-light-1);
+      padding: 3rem 1rem;
+    }
+    
+    .auth-container {
+      display: flex;
+      width: 100%;
+      max-width: 1100px;
+      min-height: 600px;
+      background-color: var(--color-white);
+      border-radius: var(--border-radius-large);
+      overflow: hidden;
+      box-shadow: var(--shadow-medium);
+    }
+    
+    .auth-form-container {
+      flex: 1;
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .auth-header {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    
+    .auth-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+    }
+    
+    .auth-subtitle {
+      font-size: 1.5rem;
+      color: var(--color-grey-dark-1);
+    }
+    
+    .auth-form {
+      width: 100%;
+      max-width: 40rem;
+      margin: 0 auto;
+    }
+    
+    .input-container {
+      position: relative;
+    }
+    
+    .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 1.5rem;
+      transform: translateY(-50%);
+      color: var(--color-grey-dark-1);
+      font-style: normal;
+    }
+    
+    .form__input {
+      width: 100%;
+      padding: 1.2rem 1.5rem 1.2rem 4rem;
+      border: 1px solid var(--color-grey-light-2);
+      border-radius: var(--border-radius-small);
+      font-family: inherit;
+      font-size: 1.5rem;
+      color: var(--color-grey-dark-2);
+      transition: var(--transition-medium);
+    }
+    
+    .form__input:focus {
+      outline: none;
+      border-color: var(--color-tertiary);
+      box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.1);
+    }
+    
+    .form__label {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: var(--color-primary);
+    }
+    
+    .form__options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1.5rem 0 2.5rem;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .remember-checkbox {
+      width: 1.6rem;
+      height: 1.6rem;
+      accent-color: var(--color-tertiary);
+    }
+    
+    .remember-label {
+      font-size: 1.4rem;
+      color: var(--color-grey-dark-1);
+    }
+    
+    .forgot-link {
+      font-size: 1.4rem;
+      color: var(--color-tertiary);
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    
+    .forgot-link:hover {
+      color: var(--color-tertiary-dark);
+      text-decoration: underline;
+    }
+    
+    .btn--auth {
+      width: 100%;
+      background-color: var(--color-tertiary);
+      color: var(--color-white);
+      padding: 1.4rem;
+      font-size: 1.6rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--border-radius-small);
+      cursor: pointer;
+      transition: var(--transition-medium);
+    }
+    
+    .btn--auth:hover {
+      background-color: var(--color-tertiary-dark);
+      transform: translateY(-3px);
+    }
+    
+    .auth-divider {
+      position: relative;
+      text-align: center;
+      margin: 2.5rem 0;
+    }
+    
+    .auth-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: var(--color-grey-light-2);
+      z-index: 1;
+    }
+    
+    .auth-divider span {
+      position: relative;
+      background-color: var(--color-white);
+      padding: 0 1.5rem;
+      font-size: 1.4rem;
+      color: var(--color-grey-dark-1);
+      z-index: 2;
+    }
+    
+    .social-login {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .btn--social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+      padding: 1.2rem;
+      border: 1px solid var(--color-grey-light-2);
+      border-radius: var(--border-radius-small);
+      background-color: transparent;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color-grey-dark-2);
+      cursor: pointer;
+      transition: var(--transition-medium);
+    }
+    
+    .btn--social:hover {
+      background-color: var(--color-grey-light-1);
+    }
+    
+    .social-icon {
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+    
+    .btn--google .social-icon {
+      color: #4285F4;
+    }
+    
+    .btn--facebook .social-icon {
+      color: #3b5998;
+    }
+    
+    .auth-footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 1.5rem;
+      color: var(--color-grey-dark-1);
+    }
+    
+    .auth-link {
+      color: var(--color-tertiary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition-fast);
+    }
+    
+    .auth-link:hover {
+      color: var(--color-tertiary-dark);
+      text-decoration: underline;
+    }
+    
+    .auth-image {
+      display: none;
+      position: relative;
+      flex: 1;
+    }
+    
+    .auth-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .auth-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom right, rgba(44, 62, 80, 0.7), rgba(230, 126, 34, 0.8));
+    }
+    
+    .auth-image-content {
+      position: absolute;
+      bottom: 4rem;
+      left: 0;
+      right: 0;
+      padding: 0 3rem;
+      color: var(--color-white);
+      text-align: center;
+    }
+    
+    .auth-image-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    
+    .auth-image-text {
+      font-size: 1.6rem;
+      line-height: 1.6;
+    }
+    
+    @media only screen and (min-width: 768px) {
+      .auth-image {
         display: block;
-        margin-top: 1rem;
       }
-      .login-form {
-        margin-top: 5rem;
-        background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+      
+      .auth-form-container {
+        padding: 5rem;
       }
-      .main {
-        background: linear-gradient(to right bottom, #7dd56f, #28b487);
-        min-height: 100vh;
-        padding-top: 5rem;
+    }
+    
+    @media only screen and (max-width: 767px) {
+      .auth-container {
+        max-width: 500px;
       }
-      .btn--green {
-        width: 100%;
-        padding: 1.5rem;
-        transition: all 0.3s;
+      
+      .auth-form-container {
+        padding: 3rem 2rem;
       }
-      .btn--green:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-      }
-      .form__input {
-        border-radius: 5px;
-        font-size: 1.5rem;
-        font-family: inherit;
-        border: none;
-        border-bottom: 3px solid transparent;
-        width: 100%;
-        display: block;
-        transition: all 0.3s;
-      }
-      .form__input:focus {
-        outline: none;
-        border-bottom: 3px solid #55c57a;
-        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
-      }
-      .form__input:focus:invalid {
-        border-bottom: 3px solid #ff7730;
-      }
-      .form__label {
-        font-size: 1.4rem;
-        font-weight: 700;
-        margin-bottom: 0.7rem;
-        display: block;
-      }
+    }
 

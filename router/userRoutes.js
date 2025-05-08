@@ -11,6 +11,10 @@ router.get('/logout', authController.logout);
 router.post('/forgot-Password', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
+// Google OAuth routes
+router.get('/auth/google', authController.googleAuth);
+router.get('/auth/google/callback', authController.googleAuthCallback);
+
 router.use(authController.protect);
 
 router.patch('/updateMyPassword',

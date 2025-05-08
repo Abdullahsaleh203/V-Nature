@@ -2,10 +2,28 @@
 const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const User = require('../models/userModel');
 const asyncHandler = require('../utils/asyncHandler');
 const appError = require('../utils/appError');
 const Email = require('../utils/email');
+
+// Google OAuth handlers
+exports.googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
+
+exports.googleAuthCallback = (req, res, next) => {
+  passport.authenticate('google', { session: false }, (err, user) => {
+    if (err) {
+      return next(new appError('Authentication failed', 401));
+    }
+    if (!user) {
+      return next(new appError('Authentication failed. No user found.', 401));
+    }
+
+    // Generate JWT token and send to client
+    createSendToken(user, 200, res);
+  })(req, res, next);
+};
 
 // Create a JWT token
 const signToken = id => {

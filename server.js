@@ -7,14 +7,7 @@ const app = require('./app');
 // Optimize database connection with connection pooling
 const DB = process.env.DATABASE_URI;
 const connectWithRetry = () => {
-    mongoose.connect(DB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        maxPoolSize: 10, // Maintain up to 10 socket connections
-        socketTimeoutMS: 30000, // Close sockets after 30 seconds of inactivity
-        serverSelectionTimeoutMS: 5000, // Give up initial connection after 5 seconds
-        heartbeatFrequencyMS: 10000, // Check connection every 10 seconds
-    })
+    mongoose.connect(DB)
         .then(() => {
             console.log('MongoDB connection successful');
         })

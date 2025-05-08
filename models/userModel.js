@@ -44,7 +44,10 @@ const userSchema = new mongoose.Schema({
             message: 'Passwords are not the same!'
         }
     },
-
+    googleId: {
+        type: String,
+        select: false
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -58,7 +61,8 @@ const userSchema = new mongoose.Schema({
         default: Date.now()
     }
 });
- // Query Middleware: runs before .find() and findOne()
+
+// Query Middleware: runs before .find() and findOne()
 // This middleware will filter out all the inactive users from the query.
 userSchema.pre(/^find/, function (next) {
     // this points to the current query

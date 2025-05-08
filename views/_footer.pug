@@ -1,13 +1,54 @@
 footer.footer
-  .footer__logo
-    img(src='/img/logo-green.png' alt='V-Natural logo')
-  ul.footer__nav
-    li: a(href='#') About us
-    li: a(href='#') Download apps
-    li: a(href='#') Become a guide
-    li: a(href='#') Careers
-    li: a(href='#') Contact
-  p.footer__copyright 
-    | &copy; by 
-    a(href='https://www.linkedin.com/in/abdallahsaleh203/') Abdallah Gamal
-    | . All rights reserved.
+  .footer-container
+    .footer-top
+      .footer-section
+        h5.footer-heading Company
+        ul.footer-list
+          li: a(href="/about") About Us
+          li: a(href="/careers") Careers
+          li: a(href="/contact") Contact Us
+          li: a(href="/terms") Terms & Conditions
+          li: a(href="/privacy") Privacy Policy
+      
+      .footer-section
+        h5.footer-heading Travelers
+        ul.footer-list
+          li: a(href="/reviews") Reviews
+          li: a(href="/faq") FAQ
+          li: a(href="/booking-guide") Booking Guide
+          li: a(href="/blog") Travel Blog
+      
+      .footer-section
+        h5.footer-heading Partners
+        ul.footer-list
+          li: a(href="/partners") Become a Partner
+          li: a(href="/affiliate") Affiliate Program
+          li: a(href="/advertise") Advertise With Us
+      
+      .footer-section
+        h5.footer-heading Keep in touch
+        .social-links
+          a.social-link(href="#", aria-label="Facebook")
+            i.social-icon.icon-facebook F
+          a.social-link(href="#", aria-label="Twitter")
+            i.social-icon.icon-twitter T
+          a.social-link(href="#", aria-label="Instagram")
+            i.social-icon.icon-instagram I
+          a.social-link(href="#", aria-label="YouTube")
+            i.social-icon.icon-youtube Y
+        .newsletter
+          form.newsletter-form
+            input.newsletter-input(type="email", placeholder="Your email address")
+            button.btn.btn--tertiary.newsletter-button Subscribe
+    
+    .footer-bottom
+      .footer-logo
+        img(src='/img/logo-green-small.png', alt='V-Natural logo')
+      
+      p.footer-copyright &copy; #{new Date().getFullYear()} V-Natural. All rights reserved.
+      
+      .footer-app-links
+        a.app-store-link(href="#")
+          img(src="https://via.placeholder.com/120x40", alt="Download on App Store")
+        a.play-store-link(href="#")
+          img(src="https://via.placeholder.com/120x40", alt="Get it on Google Play")

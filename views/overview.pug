@@ -1,16 +1,48 @@
 extends base
 
 block content
+  .hero-section
+    .hero-background
+      img.hero-image(src='/img/tours/tour-1-cover.jpg' alt='Beautiful nature tour')
+    .hero-overlay
+    .hero-content
+      h1.hero-title Discover Extraordinary Tours
+      .hero-search
+        form.hero-search-form
+          .search-group
+            input.search-input(type='text' placeholder='Where do you want to go?')
+            button.search-button.btn--tertiary Search
+      .hero-features
+        .hero-feature
+          i.hero-feature-icon ✓
+          span.hero-feature-text Verified Tours
+        .hero-feature
+          i.hero-feature-icon ★
+          span.hero-feature-text Top-rated Experiences
+        .hero-feature
+          i.hero-feature-icon 🔒
+          span.hero-feature-text Secure Booking
+  
+  .section-categories
+    .container
+      h2.section-title Popular Tour Categories
+      .categories-container
+        each category in ['Nature', 'Adventure', 'City Tours', 'Cultural', 'Beach', 'Mountain']
+          .category-card
+            .category-image
+              img(src=`/img/tours/tour-${Math.floor(Math.random() * 5) + 1}-cover.jpg`, alt=category)
+            .category-name= category
+            .category-count #{Math.floor(Math.random() * 10) + 5} tours
+  
   main.main
     .card-container
-    
       each tour in tours
         .card
           .card__header
             .card__picture
               .card__picture-overlay &nbsp;
               img.card__picture-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
-            h3.heading-tertirary
+            h3.card__title
               span= tour.name
 
           .card__details
@@ -42,4 +74,24 @@ block content
               span.card__footer-value= tour.ratingsAverage
               | 
               span.card__footer-text= `rating (${tour.ratingsQuantity})`
-            a.btn.btn--green.btn--small(href=`/tour/${tour.slug}`) Details
+            a.btn.btn--tertiary(href=`/tour/${tour.slug}`) Details
+
+  .section-testimonials
+    .container
+      h2.section-title What Travelers Say About Us
+      .testimonials-slider
+        .testimonial
+          .testimonial-text "An incredible experience! The guides were knowledgeable and the locations were breathtaking."
+          .testimonial-author
+            img.testimonial-image(src='/img/users/user-1.jpg', alt='User')
+            .testimonial-name John Smith
+        .testimonial
+          .testimonial-text "Best travel experience of my life. Will definitely book again for my next adventure!"
+          .testimonial-author
+            img.testimonial-image(src='/img/users/user-2.jpg', alt='User')
+            .testimonial-name Sarah Johnson
+        .testimonial
+          .testimonial-text "Perfectly organized tours with attention to every detail. Highly recommended!"
+          .testimonial-author
+            img.testimonial-image(src='/img/users/user-3.jpg', alt='User')
+            .testimonial-name Michael Brown
