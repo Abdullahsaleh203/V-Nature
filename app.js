@@ -64,7 +64,16 @@ app.use(
           'https://js.stripe.com',
           'https://api.stripe.com'
         ],
-        styleSrc: ["'self'", "'unsafe-inline'", 'https://*.mapbox.com'],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'https://*.mapbox.com',
+          'https://fonts.googleapis.com' // Added Google Fonts
+        ],
+        fontSrc: [
+          "'self'",
+          'https://fonts.gstatic.com' // Added Google Fonts
+        ],
         workerSrc: ["'self'", 'blob:'],
         objectSrc: ["'none'"],
         frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
