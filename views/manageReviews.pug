@@ -5,6 +5,29 @@ block content
     .review-manage
       .review-manage__title
         h2.heading-secondary.ma-bt-md Manage Reviews
+      
+      .review-manage__filter
+        form.review-manage__filter-form
+          .form__group
+            label.form__label(for='tourFilter') Filter by Tour
+            select#tourFilter.form__input
+              option(value='') All Tours
+              if tours
+                each tour in tours
+                  option(value=tour._id)= tour.name
+          
+          .form__group
+            label.form__label(for='ratingFilter') Filter by Rating
+            select#ratingFilter.form__input
+              option(value='') All Ratings
+              option(value='5') 5 Stars
+              option(value='4') 4 Stars
+              option(value='3') 3 Stars
+              option(value='2') 2 Stars
+              option(value='1') 1 Star
+          
+          button.btn.btn--small.btn--green(type='submit') Apply Filter
+      
       .review-manage__content
         if reviews && reviews.length > 0
           table.review-manage__table
@@ -21,27 +44,54 @@ block content
                 tr
                   td
                     if review.tour
-                      a(href=`/tour/${review.tour.slug}`)= review.tour.name
+                      a.review-manage__tour-link(href=`/tour/${review.tour.slug}`)
+                        if review.tour.imageCover
+                          img.review-manage__tour-img(src=`/img/tours/${review.tour.imageCover}`, alt=`${review.tour.name}`)
+                        span= review.tour.name
                     else
-                      span Tour deleted
+                      span.review-manage__deleted Tour deleted
+                  
                   td
                     if review.user
                       .review-manage__user
                         img.review-manage__user-photo(src=`/img/users/${review.user.photo}`, alt=`${review.user.name}'s photo`)
                         span= review.user.name
                     else
-                      span User deleted
+                      span.review-manage__deleted User deleted
+                  
                   td
                     .review-manage__rating
-                      span= review.rating
-                      svg.review-manage__star
-                        use(xlink:href='/img/icons.svg#icon-star')
-                  td= review.review
-                  td= review.createdAt ? review.createdAt.toLocaleDateString() : 'N/A'
+                      - const stars = review.rating
+                      each _, i in Array(5).fill()
+                        if i < stars
+                          svg.review-manage__star.review-manage__star--active
+                            use(xlink:href='/img/icons.svg#icon-star')
+                        else
+                          svg.review-manage__star.review-manage__star--inactive
+                            use(xlink:href='/img/icons.svg#icon-star')
+                  
+                  td.review-manage__review-text
+                    p= review.review
+                    button.btn.btn--tiny.review-manage__expand-btn Show more
+                  
+                  td= review.createdAt ? review.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'
+                  
                   td
                     .review-manage__actions
-                      button.btn.btn--small.btn--green.btn--edit-review(data-review-id=`${review._id}`) Edit
-                      button.btn.btn--small.btn--red.btn--delete-review(data-review-id=`${review._id}`) Delete
+                      button.btn.btn--small.btn--green.btn--edit-review(data-review-id=`${review._id}`)
+                        svg
+                          use(xlink:href='/img/icons.svg#icon-edit')
+                        span Edit
+                      button.btn.btn--small.btn--red.btn--delete-review(data-review-id=`${review._id}`)
+                        svg
+                          use(xlink:href='/img/icons.svg#icon-trash')
+                        span Delete
         else
           .review-manage__empty
-            p.label.form__label No reviews found. 
+            svg.review-manage__empty-icon
+              use(xlink:href='/img/icons.svg#icon-star')
+            p.label.form__label No reviews found.
+            p.review-manage__empty-text Users haven't submitted any reviews yet.
+      
+      .review-manage__create
+        a.btn.btn--green(href='/manage-tours') Back to Manage Tours

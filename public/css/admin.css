@@ -176,3 +176,118 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Additional Review Management Styles */
+.review-manage__filter {
+  display: flex;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+}
+
+.review-manage__filter-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  width: 100%;
+}
+
+.review-manage__filter-form .form__group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.review-manage__filter-form .btn {
+  align-self: flex-end;
+}
+
+.review-manage__tour-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #55c57a;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.review-manage__tour-img {
+  width: 5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.review-manage__deleted {
+  color: #bbb;
+  font-style: italic;
+}
+
+.review-manage__star--active {
+  fill: #f7d068;
+}
+
+.review-manage__star--inactive {
+  fill: #e0e0e0;
+}
+
+.review-manage__review-text {
+  position: relative;
+  max-width: 25rem;
+}
+
+.review-manage__review-text p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s;
+}
+
+.review-manage__review-text p.expanded {
+  white-space: normal;
+  overflow: visible;
+}
+
+.btn--tiny {
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+  color: #55c57a;
+  border: 1px solid currentColor;
+}
+
+.review-manage__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 3rem;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.review-manage__empty-icon {
+  height: 5rem;
+  width: 5rem;
+  fill: #e0e0e0;
+  margin-bottom: 1.5rem;
+}
+
+.review-manage__empty-text {
+  color: #999;
+  font-size: 1.4rem;
+}
+
+.review-manage__actions svg {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 0.5rem;
+  fill: currentColor;
+}
+
+.review-manage__actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
