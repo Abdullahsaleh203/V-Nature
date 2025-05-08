@@ -11,15 +11,25 @@ window.addEventListener('load', () => {
 export const bookTour = async tourId => {
   try {
     // 1) Get checkout session from API
-    const session = await axios(`/api/v1/booking/checkout-session/${tourId}`);
-    // console.log(session);
+    const response = await axios({
+      method: 'GET',
+      url: `/api/v1/booking/checkout-session/${tourId}`
+    });
+
+    if (!response.data.session || !response.data.session.id) {
+      throw new Error('Could not retrieve checkout session');
+    }
 
     // 2) Create checkout form + charge credit card
-    await stripe.redirectToCheckout({
-      sessionId: session.data.session.id
+    const result = await stripe.redirectToCheckout({
+      sessionId: response.data.session.id
     });
+
+    if (result.error) {
+      throw new Error(result.error.message);
+    }
   } catch (err) {
-    console.log(err);
-    showAlert('error', err);
+    console.error('Booking error:', err);
+    showAlert('error', err.message || 'Something went wrong during booking process');
   }
 };

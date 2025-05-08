@@ -4,6 +4,13 @@ const authController = require('./../controller/authController');
 
 const router = express.Router();
 
+// Stripe webhook route - needs to be before auth middleware
+router.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
+
 router.use(authController.protect);
 
 router.get('/checkout-session/:tourId', bookingController.getCheckoutSession);
