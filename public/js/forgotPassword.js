@@ -32,7 +32,7 @@
 
                 try {
                     // Use fetch API instead of axios
-                    const response = await fetch('/api/v1/users/forgotPassword', {
+                    const response = await fetch('/api/v1/users/forgot-Password', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
