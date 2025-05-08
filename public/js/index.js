@@ -6,6 +6,8 @@ import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { showAlert } from './alerts';
 import { updateTour } from './updateTour';
+import './forgotPassword'; // Import forgot password functionality
+import './resetPassword'; // Import reset password functionality
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
