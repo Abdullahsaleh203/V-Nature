@@ -19,7 +19,7 @@ if (forgotPasswordForm) {
         try {
             const res = await axios({
                 method: 'POST',
-                url: '/api/v1/users/forgotPassword',
+                url: '/api/v1/users/forgot-Password',
                 data: {
                     email
                 }
