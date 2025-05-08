@@ -183,9 +183,15 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   try {
     // 3) Send it to user's email with a link to the web reset form
-    const resetURL = `${req.protocol}://${req.get(
-      'host'
-    )}/reset-password/${resetToken}`;
+    let resetURL;
+
+    // Check if running on Vercel production
+    if (process.env.VERCEL_URL) {
+      resetURL = `https://v-nature.vercel.app/reset-password/${resetToken}`;
+    } else {
+      resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
+    }
+
     await new Email(user, resetURL).sendPasswordReset();
     res.status(200).json({
       status: 'success',
