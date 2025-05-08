@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo'); // Add this line
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorHandel');
@@ -138,9 +139,13 @@ app.use('/api', limiter);
 
 // Initialize session for Passport
 app.use(session({
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_SECRET || 'fallback-secret-key-for-development',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.DATABASE_URI,
+    ttl: 24 * 60 * 60 // 1 day
+  }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
