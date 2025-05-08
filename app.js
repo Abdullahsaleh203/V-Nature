@@ -142,14 +142,22 @@ app.use(session({
   secret: process.env.JWT_SECRET || 'fallback-secret-key-for-development',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.DATABASE_URI,
-    ttl: 24 * 60 * 60 // 1 day
-  }),
+  store: process.env.NODE_ENV === 'production' 
+    ? MongoStore.create({
+        mongoUrl: process.env.DATABASE_URI,
+        ttl: 24 * 60 * 60, // 1 day
+        touchAfter: 24 * 3600, // Only update once per 24 hours to reduce writes
+        autoRemove: 'native' // Let MongoDB handle TTL expiration for better performance
+      })
+    : MongoStore.create({
+        mongoUrl: process.env.DATABASE_URI,
+        ttl: 24 * 60 * 60 // 1 day
+      }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
   }
 }));
 

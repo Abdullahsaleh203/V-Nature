@@ -8,5 +8,7 @@ dev-data/data/import-dev-data.js
 .vscode/settings.json
 .gitignore
 views/base2.pug
-.gitignore
+* .gitignore
 .cache
+public/img/users
+.vercel
