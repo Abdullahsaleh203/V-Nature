@@ -56,7 +56,6 @@ A full-stack Node.js application for booking tours, built with Express, MongoDB,
 ```
 V-Nature/
 ├── controller/         # Business logic
-├── dev-data/           # Development data
 ├── models/             # Database models
 ├── public/             # Static files (CSS, JS, images)
 ├── router/             # API routes
