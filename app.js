@@ -55,13 +55,28 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'", 'https://*.mapbox.com', 'https://*.stripe.com'],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://*.mapbox.com', 'https://js.stripe.com', 'https://api.stripe.com'],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          'https://*.mapbox.com',
+          'https://api.mapbox.com',
+          'https://js.stripe.com',
+          'https://api.stripe.com'
+        ],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://*.mapbox.com'],
         workerSrc: ["'self'", 'blob:'],
         objectSrc: ["'none'"],
         frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
         imgSrc: ["'self'", 'data:', 'https://*.mapbox.com'],
-        connectSrc: ["'self'", 'https://*.mapbox.com', 'https://api.mapbox.com', 'https://api.stripe.com', 'https://js.stripe.com']
+        connectSrc: [
+          "'self'",
+          'https://*.mapbox.com',
+          'https://api.mapbox.com',
+          'https://events.mapbox.com',
+          'https://api.stripe.com',
+          'https://js.stripe.com'
+        ]
       }
     },
     crossOriginEmbedderPolicy: false,
