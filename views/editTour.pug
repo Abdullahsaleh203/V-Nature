@@ -50,4 +50,4 @@ block content
           input#locations.form__input(type='text', value=`${tour.locations.map(loc => `${loc.coordinates[1]},${loc.coordinates[0]}`).join('; ')}`, required, name='locations')
         .form__group.right
           button.btn.btn--green.btn--save-tour(data-tour-id=`${tour.id}`) Update tour
-          a.btn.btn--small.btn--gray(href='/manage-tours') Cancel 
+          a.btn.btn--small.btn--gray(href='/manage-tours') Cancel

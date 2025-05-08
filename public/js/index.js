@@ -5,6 +5,7 @@ import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { showAlert } from './alerts';
+import { updateTour } from './updateTour';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -13,6 +14,7 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
+const updateTourBtn = document.querySelector('.btn--save-tour');
 
 // DELEGATION
 if (mapBox) {
@@ -65,6 +67,63 @@ if (bookBtn)
     e.target.textContent = 'Processing...';
     const { tourId } = e.target.dataset;
     bookTour(tourId);
+  });
+
+if (updateTourBtn)
+  updateTourBtn.addEventListener('click', e => {
+    e.preventDefault();
+    const tourId = e.target.dataset.tourId;
+    e.target.textContent = 'Updating...';
+
+    // Gather form data
+    const name = document.getElementById('name').value;
+    const duration = parseInt(document.getElementById('duration').value, 10);
+    const maxGroupSize = parseInt(document.getElementById('maxGroupSize').value, 10);
+    const difficulty = document.getElementById('difficulty').value;
+    const price = parseFloat(document.getElementById('price').value);
+    const summary = document.getElementById('summary').value;
+    const description = document.getElementById('description').value;
+    const imageCover = document.getElementById('imageCover').value;
+    const images = document.getElementById('images').value.split(',').map(img => img.trim());
+    const startLocation = document.getElementById('startLocation').value;
+    const startDates = document.getElementById('startDates').value.split(',').map(date => date.trim());
+    const guides = document.getElementById('guides').value.split(',').map(guide => guide.trim());
+
+    // Parse locations from input - format is "lat,lng; lat,lng; ..."
+    const locationsInput = document.getElementById('locations').value;
+    const locationPairs = locationsInput.split(';').map(loc => loc.trim());
+    const locations = locationPairs.map(pair => {
+      const [lat, lng] = pair.split(',').map(coord => parseFloat(coord.trim()));
+      return {
+        type: 'Point',
+        coordinates: [lng, lat],
+        description: `Day ${locationPairs.indexOf(pair) + 1}`
+      };
+    });
+
+    // Create data object for API
+    const tourData = {
+      name,
+      duration,
+      maxGroupSize,
+      difficulty,
+      price,
+      summary,
+      description,
+      imageCover,
+      images,
+      startLocation: {
+        description: startLocation,
+        type: 'Point',
+        coordinates: [0, 0] // Default coordinates, should be updated in the backend
+      },
+      startDates,
+      guides,
+      locations
+    };
+
+    // Call updateTour function
+    updateTour(tourId, tourData);
   });
 
 const alertMessage = document.querySelector('body').dataset.alert;
