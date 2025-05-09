@@ -11,7 +11,7 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const mongoose = require('mongoose'); // Import mongoose for database status check
+const mongoose = require('mongoose'); 
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorHandel');

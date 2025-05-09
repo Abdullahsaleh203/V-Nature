@@ -1,37 +1,62 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "functions": {
-    "server.js": {
-      "memory": 1024,
-      "maxDuration": 10
+  "framework": null,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "**/*.js",
+          "**/*.pug",
+          "**/*.css",
+          "**/*.jpg",
+          "**/*.png",
+          "**/*.svg",
+          "public/**"
+        ]
+      }
     }
-  },
-  "rewrites": [
-    { "source": "/js/(.*)", "destination": "/public/js/$1" },
-    { "source": "/css/(.*)", "destination": "/public/css/$1" },
-    { "source": "/img/(.*)", "destination": "/public/img/$1" },
-    { "source": "/(.+\\.(jpg|jpeg|png|gif|svg|ico|webp|css|js))", "destination": "/public/$1" },
-    { "source": "/(.*)", "destination": "/server.js" }
   ],
-  "headers": [
+  "routes": [
     {
-      "source": "/js/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "src": "/js/(.*)",
+      "dest": "/public/js/$1",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
     },
     {
-      "source": "/css/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "src": "/css/(.*)",
+      "dest": "/public/css/$1",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
     },
     {
-      "source": "/img/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "src": "/img/(.*)",
+      "dest": "/public/img/$1",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
     },
     {
-      "source": "/(.+\\.(jpg|jpeg|png|gif|svg|ico|webp|css|js))",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "src": "/(.*\\.(jpg|jpeg|png|gif|ico|svg|webp))",
+      "dest": "/public/$1",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
