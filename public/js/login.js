@@ -28,17 +28,6 @@ export const login = async (email, password) => {
   }
 };
 
-// Add event listener to the form
-const form = document.querySelector('.form');
-if (form) {
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    login(email, password);
-  });
-}
-
 export const logout = async () => {
   try {
     const res = await axios({
