@@ -8,7 +8,7 @@ block content
           h2.auth-title Sign in to your account
           p.auth-subtitle Welcome back! Please enter your details to continue
 
-        form.auth-form
+        form.auth-form.form--login
           .form__group
             label.form__label(for='email') Email address
             .input-container
@@ -34,13 +34,9 @@ block content
             span or
           
           .social-login
-            button.btn.btn--social.btn--google
+            a.btn.btn--social.btn--google(href='/api/v1/users/auth/google')
               span.social-icon G
               span Continue with Google
-            
-            button.btn.btn--social.btn--facebook
-              span.social-icon f
-              span Continue with Facebook
           
           .auth-footer
             p Don't have an account? 

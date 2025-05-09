@@ -59,7 +59,7 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        defaultSrc: ["'self'", 'https://*.mapbox.com', 'https://*.stripe.com'],
+        defaultSrc: ["'self'", 'https://*.mapbox.com', 'https://*.stripe.com', 'https://accounts.google.com'],
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",
@@ -67,13 +67,15 @@ app.use(
           'https://*.mapbox.com',
           'https://api.mapbox.com',
           'https://js.stripe.com',
-          'https://api.stripe.com'
+          'https://api.stripe.com',
+          'https://accounts.google.com'
         ],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
           'https://*.mapbox.com',
-          'https://fonts.googleapis.com' // Added Google Fonts
+          'https://fonts.googleapis.com', // Added Google Fonts
+          'https://accounts.google.com'
         ],
         fontSrc: [
           "'self'",
@@ -81,15 +83,16 @@ app.use(
         ],
         workerSrc: ["'self'", 'blob:'],
         objectSrc: ["'none'"],
-        frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com'],
-        imgSrc: ["'self'", 'data:', 'https://*.mapbox.com'],
+        frameSrc: ["'self'", 'https://js.stripe.com', 'https://hooks.stripe.com', 'https://accounts.google.com'],
+        imgSrc: ["'self'", 'data:', 'https://*.mapbox.com', 'https://*.googleusercontent.com'],
         connectSrc: [
           "'self'",
           'https://*.mapbox.com',
           'https://api.mapbox.com',
           'https://events.mapbox.com',
           'https://api.stripe.com',
-          'https://js.stripe.com'
+          'https://js.stripe.com',
+          'https://accounts.google.com'
         ]
       }
     },
@@ -139,20 +142,20 @@ app.use('/api', limiter);
 
 // Initialize session for Passport
 app.use(session({
-  secret: process.env.JWT_SECRET || 'fallback-secret-key-for-development',
+  secret: process.env.JWT_SECRET_KEY || 'fallback-secret-key-for-development',
   resave: false,
   saveUninitialized: false,
-  store: process.env.NODE_ENV === 'production' 
+  store: process.env.NODE_ENV === 'production'
     ? MongoStore.create({
-        mongoUrl: process.env.DATABASE_URI,
-        ttl: 24 * 60 * 60, // 1 day
-        touchAfter: 24 * 3600, // Only update once per 24 hours to reduce writes
-        autoRemove: 'native' // Let MongoDB handle TTL expiration for better performance
-      })
+      mongoUrl: process.env.DATABASE_URI,
+      ttl: 24 * 60 * 60, // 1 day
+      touchAfter: 24 * 3600, // Only update once per 24 hours to reduce writes
+      autoRemove: 'native' // Let MongoDB handle TTL expiration for better performance
+    })
     : MongoStore.create({
-        mongoUrl: process.env.DATABASE_URI,
-        ttl: 24 * 60 * 60 // 1 day
-      }),
+      mongoUrl: process.env.DATABASE_URI,
+      ttl: 24 * 60 * 60 // 1 day
+    }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
