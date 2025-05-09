@@ -173,6 +173,30 @@ app.use((req, res, next) => {
   next();
 });
 
+// Health check endpoint for debugging deployments
+app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  
+  res.status(200).json({
+    status: 'success',
+    message: 'Server is running',
+    environment: process.env.NODE_ENV,
+    timestamp: new Date().toISOString(),
+    database: {
+      status: dbStatus,
+      uri: process.env.DATABASE_URI ? 
+           `${process.env.DATABASE_URI.split('@')[0].split('//')[0]}//****:****@${process.env.DATABASE_URI.split('@')[1] || 'unknown'}` : 
+           'Not configured'
+    }
+  });
+});
+
+// Import fallback handlers
+const fallbackHandlers = require('./controller/fallbackController');
+
+// Add fallback routes for when DB is down
+app.get('/api/fallback', fallbackHandlers.getDbErrorPage);
+
 // Routes - keep these optimized
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRoute);

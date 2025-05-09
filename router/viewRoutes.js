@@ -3,16 +3,35 @@ const express = require('express');
 const viewController = require('../controller/viewController');
 const authController = require('../controller/authController');
 const bookingController = require('../controller/bookingController');
+const fallbackController = require('../controller/fallbackController');
 
 const router = express.Router();
 
+// Check for DB connectivity
+const checkDbConnection = (req, res, next) => {
+  const mongoose = require('mongoose');
+  if (mongoose.connection.readyState !== 1) { // 0 = disconnected, 1 = connected
+    console.log('Database disconnected, using fallback routes');
+    return fallbackController.getDbErrorPage(req, res);
+  }
+  next();
+};
+
 // router.use(authController.isLoggedIn);
 
+// Add fallback route that will always work
+router.get('/offline', fallbackController.getFallbackHomePage);
+
+// Main routes with database connection check
 router.get('/',
-    // bookingController.createBooking,
+    checkDbConnection,
     authController.isLoggedIn,
     viewController.getOverview);
-router.get('/tour/:slug', authController.isLoggedIn, viewController.getTour);
+    
+router.get('/tour/:slug', 
+    checkDbConnection,
+    authController.isLoggedIn, 
+    viewController.getTour);
 router.get('/login', authController.isLoggedIn, viewController.getLoginForm);
 router.get('/signup', authController.isLoggedIn, viewController.getSignupForm);
 router.get('/forgot-password', authController.isLoggedIn, viewController.getForgotPasswordForm);

@@ -1,10 +1,11 @@
 {
-  "name": "V-Nature",
+  "name": "v-nature",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node server.js",
+    "build": "npm run build:js",
+    "start": "node server.js",
     "dev": "nodemon --legacy-watch --env-file=.env server.js",
     "dev2": "nodemon --trace-warnings --env-file=.env server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
@@ -72,6 +73,6 @@
     "prettier": "^1.19.1"
   },
   "engines": {
-    "node": "22.x"
+    "node": "20.x"
   }
 }
