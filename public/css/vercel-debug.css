@@ -1,0 +1,16 @@
+/* Vercel Deployment Debug CSS */
+.vercel-deployment-check {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: monospace;
+  z-index: 9999;
+}
+
+.vercel-deployment-check::after {
+  content: "Static files working!";
+}

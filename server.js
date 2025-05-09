@@ -47,6 +47,30 @@ connectWithRetry();
 
 const PORT = process.env.PORT || 3000;
 
+// Special route for Vercel deployment troubleshooting
+app.get('/_vercel/deployment/check', (req, res) => {
+    const envVars = {
+        NODE_ENV: process.env.NODE_ENV || 'not set',
+        DATABASE_URI: process.env.DATABASE_URI ? 'is set (hidden)' : 'not set',
+        JWT_SECRET_KEY: process.env.JWT_SECRET_KEY ? 'is set (hidden)' : 'not set',
+        PORT: process.env.PORT || 'not set (using default)',
+    };
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Vercel deployment check',
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV,
+        envVarsStatus: envVars,
+        directoryStructure: {
+            views: fs.existsSync(path.join(__dirname, 'views')),
+            publicFolder: fs.existsSync(path.join(__dirname, 'public')),
+            controllers: fs.existsSync(path.join(__dirname, 'controller')),
+            models: fs.existsSync(path.join(__dirname, 'models')),
+        }
+    });
+});
+
 const server = app.listen(PORT, () => {
     console.log(`🚀 Server is running on port ${PORT}`);
 });

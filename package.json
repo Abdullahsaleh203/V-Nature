@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:js",
+    "build": "npm run build:js && node vercel-build.js",
     "start": "node server.js",
     "dev": "nodemon --legacy-watch --env-file=.env server.js",
     "dev2": "nodemon --trace-warnings --env-file=.env server.js",

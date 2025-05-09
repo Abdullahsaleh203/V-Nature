@@ -11,14 +11,23 @@
           "**/*.pug",
           "**/*.css",
           "**/*.jpg",
+          "**/*.jpeg",
           "**/*.png",
           "**/*.svg",
-          "public/**"
+          "public/**",
+          "views/**",
+          "models/**",
+          "controller/**",
+          "router/**",
+          "utils/**"
         ]
       }
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
-  ],
-  "routes": [
+  ],  "routes": [
     {
       "src": "/js/(.*)",
       "dest": "/public/js/$1",
@@ -41,22 +50,31 @@
       }
     },
     {
-      "src": "/(.*\\.(jpg|jpeg|png|gif|ico|svg|webp))",
-      "dest": "/public/$1",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
+      "handle": "filesystem"
+    },
+    {
+      "src": "/api/health",
+      "dest": "server.js"
     },
     {
       "src": "/api/(.*)",
       "dest": "server.js"
     },
     {
+      "src": "/(.*\\.(jpg|jpeg|png|gif|ico|svg|webp|js|css))",
+      "dest": "/public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "server.js"
     }
-  ],
-  "env": {
+  ],  "env": {
     "NODE_ENV": "production"
+  },
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
   }
 }
