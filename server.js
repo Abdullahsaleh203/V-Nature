@@ -29,9 +29,9 @@ const connectWithRetry = () => {
             process.exit(1);
         }
     }
-    
+
     console.log('Attempting to connect to MongoDB...');
-    
+
     mongoose.connect(DB)
         .then(() => {
             console.log('✅ MongoDB connection successful');

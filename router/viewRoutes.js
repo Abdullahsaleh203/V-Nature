@@ -9,12 +9,12 @@ const router = express.Router();
 
 // Check for DB connectivity
 const checkDbConnection = (req, res, next) => {
-  const mongoose = require('mongoose');
-  if (mongoose.connection.readyState !== 1) { // 0 = disconnected, 1 = connected
-    console.log('Database disconnected, using fallback routes');
-    return fallbackController.getDbErrorPage(req, res);
-  }
-  next();
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState !== 1) { // 0 = disconnected, 1 = connected
+        console.log('Database disconnected, using fallback routes');
+        return fallbackController.getDbErrorPage(req, res);
+    }
+    next();
 };
 
 // router.use(authController.isLoggedIn);
@@ -27,10 +27,10 @@ router.get('/',
     checkDbConnection,
     authController.isLoggedIn,
     viewController.getOverview);
-    
-router.get('/tour/:slug', 
+
+router.get('/tour/:slug',
     checkDbConnection,
-    authController.isLoggedIn, 
+    authController.isLoggedIn,
     viewController.getTour);
 router.get('/login', authController.isLoggedIn, viewController.getLoginForm);
 router.get('/signup', authController.isLoggedIn, viewController.getSignupForm);

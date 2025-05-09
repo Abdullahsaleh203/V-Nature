@@ -10,7 +10,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
-const MongoStore = require('connect-mongo'); // Add this line
+const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose'); // Import mongoose for database status check
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorHandel');
@@ -176,7 +177,7 @@ app.use((req, res, next) => {
 // Health check endpoint for debugging deployments
 app.get('/api/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
-  
+
   res.status(200).json({
     status: 'success',
     message: 'Server is running',
@@ -184,9 +185,9 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     database: {
       status: dbStatus,
-      uri: process.env.DATABASE_URI ? 
-           `${process.env.DATABASE_URI.split('@')[0].split('//')[0]}//****:****@${process.env.DATABASE_URI.split('@')[1] || 'unknown'}` : 
-           'Not configured'
+      uri: process.env.DATABASE_URI ?
+        `${process.env.DATABASE_URI.split('@')[0].split('//')[0]}//****:****@${process.env.DATABASE_URI.split('@')[1] || 'unknown'}` :
+        'Not configured'
     }
   });
 });
