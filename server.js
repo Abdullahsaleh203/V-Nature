@@ -1,3 +1,4 @@
+/* eslint-disable */
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');

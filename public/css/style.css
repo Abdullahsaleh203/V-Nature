@@ -453,7 +453,12 @@ body {
 
 .section-header {
   position: relative;
-  height: 38vw;
+  height: 45vw;
+  /* Increased from 38vw for better visibility */
+  max-height: 600px;
+  /* Adding max-height to prevent overly large images on wide screens */
+  min-height: 300px;
+  /* Adding min-height to maintain visibility on smaller screens */
   clip-path: polygon(0 0,
       100% 0,
       100% calc(100% - var(--section-rotate)),
@@ -466,6 +471,9 @@ body {
 
 .header__hero {
   height: 100%;
+  position: relative;
+  overflow: hidden;
+  /* Prevents image overflow */
 }
 
 .header__hero-img {
@@ -473,8 +481,14 @@ body {
   object-fit: cover;
   height: 100%;
   width: 100%;
-  -o-object-position: 50% 25%;
-  object-position: 50% 25%;
+  -o-object-position: 50% 30%;
+  object-position: 50% 30%;
+  display: block;
+  /* Ensures the image behaves as a block element */
+  position: relative;
+  /* Helps with positioning */
+  z-index: 1;
+  /* Places it above the background but below overlay */
 }
 
 .header__hero-overlay {

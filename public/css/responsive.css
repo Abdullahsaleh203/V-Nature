@@ -381,6 +381,12 @@ html {
         object-position: 50% 30%;
     }
 
+    .section-header {
+        height: 60vw;
+        /* Increased height on smaller screens for better visibility */
+        min-height: 250px;
+    }
+
     .section-pictures {
         flex-direction: column;
     }
