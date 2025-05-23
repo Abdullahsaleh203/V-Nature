@@ -12,3 +12,16 @@ views/base2.pug
 .cache
 public/img/users
 .vercel
+.vscode/mcp.json
+public/fix-comparison.html
+tour-page.html
+public/test-image.html
+public/img/tours/backup-tour-4-cover.jpg
+public/img/tours/optimized-tour-5-cover.jpg
+public/img/tours/original-tour-5-cover.jpg
+public/img/tours/temp-tour-4-cover.jpg
+temp/reference-image.jpg
+utils/optimizeImages.js
+
+verify-image-fixes.js
+.env.example
